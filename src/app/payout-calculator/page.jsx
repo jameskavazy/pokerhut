@@ -4,9 +4,13 @@ import './payout.css'
 
 export default function Payout(){
     const id = crypto.randomUUID();
-    const [newRow, setNewRow] = useState([{ id: id, component: <FormRow key={id}/> }]);
+    const [newRow, setNewRow] = useState([
+        { id: id, name: '', buyIn: '', cashOut: ''}]
+    );
+
+
     const [results, setResults] = useState(false);
-    const [players, setPlayers] = useState([]);
+
 
 
     function onAddPlayerBtnClick(){
@@ -15,89 +19,103 @@ export default function Payout(){
             const newId = crypto.randomUUID();
             return [
                 ...previousRow,
-                { id: newId, component: <FormRow key={newId}/> }
+                { id: newId, name: '', buyIn: '', cashOut: ''}
             ]
         });
     }
 
+    function handleInputChange(id, field, value){
+        /*
+            Updates the current row if Id of the row that change is the same as the row in current rows,
+             and then it updates the value using the spread operator to copy existing row
+
+            then it updates the specific field (square brackets helps this work dynamically) with the new value
+        */
+
+        setNewRow((currentRows) => 
+            currentRows.map(row => 
+                row.id === id ? {...row, [field]: value } : row
+        ));
+    }
     
 
-    function submitForm(formData){
-        
-        for (const row in newRow){
-            const name = formData.get(row.id)
-            console.log(name);
+    function submitForm() {
+        if (newRow.length === 0) {
+           setResults(false);
         }
-            // console.log(e.target.id)
-
-            // // for (const row of newRow){
-            // //     const name = formData.get(row.component.key);
-            // //     console.log(name);
-            // // }
-
-
-
-
-        // const name = formData.get('name');
-        // alert(`${name}`)
+       setResults(true);
+       
     }
 
-    
-
-    
     function onBackPressed(){
+        console.log('onBackPressed Called');
         setResults(false);
     }
     
    return (
         <div>
-            {results ? (<Results></Results>) : (
-
-                <>
-                <div className="payout-container">
-                    <div className="form-row">
-                    
-                        <form action={submitForm} className="new-player-form">
-                            {newRow.map(row => (
-                                row.component))}  
-                            <button type='button' onClick={onAddPlayerBtnClick}>Add Player</button> 
-                            <br></br><br></br>
-                            <button type="submit">Submit</button>
-                        </form>
-                    </div>            
-                </div>
-                </>
-
-            )}
+            {results ? (
+                <Results newRow={newRow} onBackPressed={onBackPressed}></Results>
+                ) : (
+                     <PlayerForm 
+                        submitForm={submitForm} 
+                        newRow={newRow} 
+                        handleInputChange={handleInputChange}
+                        onAddPlayerBtnClick={onAddPlayerBtnClick}>
+                    </PlayerForm> 
+                     )}
         </div>     
     );    
 }
 
-function FormRow({ id }){
-    //TODO pass id here to name=?
+function FormRow({ id, name, buyIn, cashOut, onInputChange }){
     return (
         <div> 
-            <input id={id} className="name-input" type="text" autoFocus placeholder={"Player Name"}></input>
-                <input className="buy-in-input" type="number" placeholder="Buy In" ></input>
-                <input className="cash-out-input" type="number" placeholder="Cash Out" ></input>   
-                <br></br><br></br>
+            <input 
+                id={id} 
+                className="name-input" 
+                type="text" 
+                autoFocus 
+                placeholder={"Player Name"} 
+                value={name} 
+                onChange={e => onInputChange(id, 'name', e.target.value)}
+            />
+                
+            <input 
+                className="buy-in-input" 
+                type="number" 
+                placeholder="Buy In" 
+                value={buyIn}
+                onChange={(e => onInputChange(id, 'buyIn', e.target.value))}
+            
+            />
+            <input 
+            className="cash-out-input" 
+            type="number" 
+            placeholder="Cash Out"
+            value={cashOut}
+            onChange={(e) => onInputChange(id, 'cashOut', e.target.value)}
+            />   
+            
+            <br></br><br></br>
         </div>
     );
 }
 
 
-function Results(){
+function Results({ newRow, onBackPressed }){
     return (
         <>
             <ul className='list'>
-                <li>
-                    <p>Player 1</p>
-                </li>
-                <li>
-                    <p>Player 1</p>
-                </li>
+                {newRow.map(row => {
+                    return (
+                        <li key={newRow.id}>
+                            {`${row.name} : £${Number(row.cashOut - row.buyIn)}`}
+                        </li>
+                    ) 
+                })} 
             </ul>
-            <button >Back</button>
+            <button onClick={onBackPressed}>Back</button>
         </>
 
     )
@@ -105,6 +123,32 @@ function Results(){
 
 
 
+function PlayerForm({ submitForm, handleInputChange, newRow, onAddPlayerBtnClick }){
+    return (
+        
+            <div className="payout-container">
+                <div className="form-row">
+                
+                    <form action={submitForm} className="new-player-form">
+                        {newRow.map((row) => (
+                            <FormRow
+                                key={row.id}
+                                id={row.id}
+                                name={row.name}
+                                buyIn={row.buyIn}
+                                cashOut={row.cashOut}
+                                onInputChange={handleInputChange}
+                            />
 
+                        ))}  
+                        <button type='button' onClick={onAddPlayerBtnClick}>Add Player</button> 
+                        <br></br><br></br>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>            
+            </div>
+            
+    );
+}
 
 
