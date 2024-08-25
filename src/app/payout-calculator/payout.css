@@ -1,0 +1,18 @@
+.payout-container {
+    margin-inline: auto;
+    max-width: fit-content;
+    padding: 5px;
+    
+}
+
+.name-input {
+    margin-inline: auto;
+}
+
+.buy-in-input {
+    margin-inline: auto;
+}
+
+.cash-out-input {
+    margin-inline: auto;
+}

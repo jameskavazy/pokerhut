@@ -1,8 +1,8 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -14,20 +14,64 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+} */ 
+
+.nav-bar {
+  margin-top: 2dvb;
+  margin-bottom: 2dvb;
+  display: flex; 
+  justify-content: space-between;
+  margin-left: 33%;
+  margin-right: 33%;
+  background-color: white;
+  padding: 10px;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.nav-button {
+  flex-grow: 1;
+  margin-left: 10px;
+  margin-right: 5px;
+  padding: 5px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.container {
+  display: flex;
 }
+
+.container button {
+  background-color: black;
+  text-decoration: none;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.container button:hover {
+  background-color: #333;
+}
+
+.home-screen-title {
+  flex-grow: 2;
+  background-color: #d5dbd6;
+  padding: 20%;
+  color: black;
+  text-align: left;
+}
+
+.side-panel {
+  flex-grow: 1;
+  background-color: rgb(84, 11, 255);
+  color: black;
+  text-align: center;
+}
+
+
+
+
