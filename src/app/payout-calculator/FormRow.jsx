@@ -20,11 +20,11 @@ export function FormRow({ id, name, buyIn, cashOut, onInputChange, onRemovePlaye
             
             />
             <input 
-            className="cash-out-input" 
-            type="number" 
-            placeholder="Cash Out"
-            value={cashOut}
-            onChange={(e) => onInputChange(id, 'cashOut', e.target.value)}
+                className="cash-out-input" 
+                type="number" 
+                placeholder="Cash Out"
+                value={cashOut}
+                onChange={(e) => onInputChange(id, 'cashOut', e.target.value)}
             />
             <button type="button" onClick={() => onRemovePlayerBtnClick(id)}>Remove</button>
             <br></br><br></br>

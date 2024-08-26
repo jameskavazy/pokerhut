@@ -9,7 +9,6 @@ export default function Home() {
 }
 
 function App(){
-  // const [newItem, setNewItem] = useState("")
   const router = useRouter();
 
   const registerRoute = () => {

@@ -1,12 +1,12 @@
 
-export function Results({ newRow, onBackPressed }){
+export function Results({ players, onBackPressed }){
     return (
         <>
             <ul className='list'>
-                {newRow.map(row => {
+                {players.map(player => {
                     return (
-                        <li key={newRow.id}>
-                            {`${row.name} : £${Number(row.cashOut - row.buyIn)}`}
+                        <li key={players.id}>
+                            {`${player.name} : £${Number(player.cashOut - player.buyIn)}`}
                         </li>
                     ) 
                 })} 
