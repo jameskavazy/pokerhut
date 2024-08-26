@@ -11,8 +11,6 @@ export default function Payout(){
 
     const [results, setResults] = useState(false);
 
-
-
     function onAddPlayerBtnClick(){
 
         setNewRow((previousRow) => {
@@ -51,6 +49,12 @@ export default function Payout(){
         console.log('onBackPressed Called');
         setResults(false);
     }
+
+    function onRemovePlayerBtnClick(id){
+        setNewRow(currentRows => {
+            return currentRows.filter(row => row.id !== id)
+        })   
+    }
     
    return (
         <div>
@@ -61,14 +65,15 @@ export default function Payout(){
                         submitForm={submitForm} 
                         newRow={newRow} 
                         handleInputChange={handleInputChange}
-                        onAddPlayerBtnClick={onAddPlayerBtnClick}>
-                    </PlayerForm> 
+                        onAddPlayerBtnClick={onAddPlayerBtnClick}
+                        onRemovePlayerBtnClick={onRemovePlayerBtnClick}    
+                   /> 
                      )}
         </div>     
     );    
 }
 
-function FormRow({ id, name, buyIn, cashOut, onInputChange }){
+function FormRow({ id, name, buyIn, cashOut, onInputChange, onRemovePlayerBtnClick}){
     return (
         <div> 
             <input 
@@ -95,7 +100,8 @@ function FormRow({ id, name, buyIn, cashOut, onInputChange }){
             placeholder="Cash Out"
             value={cashOut}
             onChange={(e) => onInputChange(id, 'cashOut', e.target.value)}
-            />   
+            />
+            <button onClick={() => onRemovePlayerBtnClick(id)}>Remove</button>
             
             <br></br><br></br>
         </div>
@@ -123,12 +129,11 @@ function Results({ newRow, onBackPressed }){
 
 
 
-function PlayerForm({ submitForm, handleInputChange, newRow, onAddPlayerBtnClick }){
+function PlayerForm({ submitForm, handleInputChange, newRow, onAddPlayerBtnClick, onRemovePlayerBtnClick }){
     return (
         
             <div className="payout-container">
                 <div className="form-row">
-                
                     <form action={submitForm} className="new-player-form">
                         {newRow.map((row) => (
                             <FormRow
@@ -137,7 +142,8 @@ function PlayerForm({ submitForm, handleInputChange, newRow, onAddPlayerBtnClick
                                 name={row.name}
                                 buyIn={row.buyIn}
                                 cashOut={row.cashOut}
-                                onInputChange={handleInputChange}
+                                onInputChange={handleInputChange} 
+                                onRemovePlayerBtnClick={onRemovePlayerBtnClick}
                             />
 
                         ))}  
