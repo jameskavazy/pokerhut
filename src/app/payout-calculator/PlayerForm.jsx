@@ -1,8 +1,14 @@
 import { FormRow } from './FormRow'
 
 export function PlayerForm({ submitForm, handleInputChange, players, onAddPlayerBtnClick, onRemovePlayerBtnClick }){
+
+
+    if (players === undefined) {
+        players = [{id: '1', name: '', buyIn:'', cashOut: ''}]
+    }
     return (
-        
+      
+       
             <div className="payout-container">
                 <div className="form-row">
                     <form data-testid="player-form-item" action={submitForm} className="new-player-form">
