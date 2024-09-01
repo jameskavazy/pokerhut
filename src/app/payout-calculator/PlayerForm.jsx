@@ -10,6 +10,9 @@ export function PlayerForm({ submitForm, handleInputChange, players, onAddPlayer
       
        
             <div className="payout-container">
+                <div className="headers">
+                    <p>Name</p><p>Buy In</p><p>Cash Out</p>
+                </div>
                 <div className="form-row">
                     <form data-testid="player-form-item" action={submitForm} className="new-player-form">
                         {players.map((player) => (
