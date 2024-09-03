@@ -5,7 +5,9 @@ import { Results } from "./Results";
 import { InvalidValueWarning } from "./InvalidValueWarning";
 import { v4 as uuidv4 } from 'uuid';
 import './payout.css';
-import Deque from '../Deque';
+import { playerFormIsValid } from '../../../utils/payoutUtils/playerFormIsValid';
+import { getTotals } from '../../../utils/payoutUtils/getTotals';
+import { calculatePayouts } from '../../../utils/payoutUtils/calculatePayouts';
 
 export var payments = [];
 
@@ -111,105 +113,4 @@ export default function Payout() {
             )}
         </div>
     );
-}
-
-// Validate player form
-export function playerFormIsValid(players) {
-    for (const player of players) {
-        if (player.name === '' || player.buyIn === '' || player.cashOut === '') return false;
-        if (Number(player.cashOut) < 0 || Number(player.buyIn) < 0) return false;
-    }
-    return true;
-}
-
-// Calculate and return totals
-export function getTotals(players) {
-    let totalBuyIn = 0;
-    let totalCashOut = 0;
-    players.forEach(player => {
-        totalBuyIn += Number(player.buyIn);
-        totalCashOut += Number(player.cashOut);
-    });
-    totalBuyIn = parse(totalBuyIn);
-    totalCashOut = parse(totalCashOut);
-    return { totalBuyIn, totalCashOut };
-}
-
-
-export function calculatePayouts(players){
-    players = sortPlayers(players);
-    const playersDeque = toDeque(players);
-    determineOutcomes(playersDeque);
-}
-
-export function sortPlayers(players){
-    for (const player of players){
-        player.profit = player.cashOut - player.buyIn;
-    }
-
-    return players.sort((a, b) => {
-        return (b.profit - a.profit)
-    });
-}
-
-export function toDeque(playersArr){
-    const playersDeque = new Deque();
-    playersArr.forEach((e) => playersDeque.addRear(e));
-    return playersDeque;
-}
-
-export function determineOutcomes(playersDeque){
-
-    if (playersDeque.isEmpty()) return;
-
-    if (parse(playersDeque.getRear().profit) < parse(playersDeque.getFront().profit)) {
-        //POP last,  last pays off whole debt to front. 
-        const last = playersDeque.removeRear();
-        
-        // Update Front's profit
-        const front = playersDeque.getFront();
-        front.profit -= parse(last.profit);
-
-        //record transaction
-        payments.push(`${last.name} owes £${parse(last.profit)} to ${front.name}`);
-            
-    } else if (parse(playersDeque.getRear().profit) > parse(playersDeque.getFront().profit)) {
-        //Pop First is paid off completely,
-        const first = playersDeque.removeFront();
-        // update last
-        const last = playersDeque.getRear();
-        last.profit += parse(first.profit);
-        payments.push(`${last.name} owes £${parse(first.profit)} to ${first.name}`);
-
-    } else {
-        //equal 
-        // pop both, now zero.
-        const first = playersDeque.removeFront();
-        const last = playersDeque.removeRear();
-
-        // payments.push(`${first.name} receives £${last.profit} from ${last.name}`);
-        payments.push(`${last.name} owes £${parse(last.profit)} to ${first.name}`);
-
-    }
-
-    determineOutcomes(playersDeque);
-}
-
-/**
- * 
- * @param {Number} a 
- * @param {Number} b 
- * @returns 
- */
-export function lessThanOrEqual(a, b){
-    return Math.abs(a) <= Math.abs(b);
-}
-
-
-export function parse(number){
-    return Number(Math.abs(number).toFixed(2));
-}
-
-export function updatePayments(string){
-    payments.push(string);
 }
