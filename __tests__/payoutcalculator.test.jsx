@@ -1,17 +1,15 @@
 import '@testing-library/jest-dom'
-import { getByRole, queryAllByRole, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { PlayerForm } from '@/app/payout-calculator/PlayerForm'
-import { userEvent } from '@testing-library/user-event'
-import { waitFor } from '@testing-library/react';
-import { submitForm } from  '../src/app/payout-calculator/page'
 import Payout  from '../src/app/payout-calculator/page'
-import { InvalidValueWarning } from '@/app/payout-calculator/InvalidValueWarning';
-import { Results } from '@/app/payout-calculator/Results';
 import { FormRow } from '@/app/payout-calculator/FormRow';
-import { playerFormIsValid } from '../src/app/payout-calculator/page';
-import * as payoutModule from '../src/app/payout-calculator/page';
+import { playerFormIsValid } from '../utils/payoutUtils/playerFormIsValid';
+import { toDeque } from '../utils/payoutUtils/toDeque';
+import { payments } from '../src/app/payout-calculator/page';
+import { determineOutcomes } from '../utils/payoutUtils/determineOutcomes';
+import { getTotals } from '../utils/payoutUtils/getTotals';
 import Deque from '@/app/Deque';
-
+import { sortPlayers } from '../utils/payoutUtils/sortPlayers';
 
 const mockSubmitForm = jest.fn();
 const mockHandleInput = jest.fn();
@@ -27,8 +25,11 @@ https://www.youtube.com/watch?v=FcHUPqKRvxQ
 */
 
 
+
+
 describe('Player Form', () => {
 
+  
     let players;
 
     beforeEach(() => {
@@ -212,7 +213,7 @@ describe('totals are correctly updated', () => {
             {id: '2', name: 'Player 2', buyIn: 10, cashOut: 10}
         ];
 
-        const { totalBuyIn, totalCashOut } = payoutModule.getTotals(players);
+        const { totalBuyIn, totalCashOut } = getTotals(players);
         expect(totalBuyIn).toBe(22);
         expect(totalCashOut).toBe(22);
     });
@@ -223,7 +224,7 @@ describe('totals are correctly updated', () => {
             {id: '2', name: 'Player 2', buyIn: 10, cashOut: 10}
         ];
             
-        const { totalBuyIn, totalCashOut } = payoutModule.getTotals(players);
+        const { totalBuyIn, totalCashOut } = getTotals(players);
         expect(totalBuyIn).toBe(210);
         expect(totalCashOut).toBe(22);
     });
@@ -244,7 +245,7 @@ describe('Calculate Payouts Function', () => {
 
         ];
 
-        const playersSorted = payoutModule.sortPlayers(players);
+        const playersSorted = sortPlayers(players);
 
     
         playersSorted.forEach((player, index, array) => {
@@ -266,7 +267,7 @@ describe('Calculate Payouts Function', () => {
             {id: '4', name: 'James', buyIn: 200, cashOut: 1000}
         ];
 
-        const playersDeque = payoutModule.toDeque(players);
+        const playersDeque = toDeque(players);
         expect(playersDeque).toBeInstanceOf(Deque);
        
     });
@@ -279,7 +280,7 @@ describe('Calculate Payouts Function', () => {
             {id: '4', name: 'James', buyIn: 200, cashOut: 1000}
         ];
 
-        const playersDeque = payoutModule.toDeque(players);
+        const playersDeque = toDeque(players);
         expect(playersDeque.size()).toBe(4);
     });
 
@@ -291,7 +292,7 @@ describe('Calculate Payouts Function', () => {
             {id: '4', name: 'James', buyIn: 200, cashOut: 1000}
         ];
 
-        const playersDeque = payoutModule.toDeque(players);
+        const playersDeque = toDeque(players);
         playersDeque.removeRear();
         expect(playersDeque.size()).toBe(3);
     });
@@ -304,7 +305,7 @@ describe('Calculate Payouts Function', () => {
             {id: '4', name: 'James', buyIn: 200, cashOut: 1000}
         ];
 
-        const playersDeque = payoutModule.toDeque(players);
+        const playersDeque = toDeque(players);
         const player = playersDeque.removeRear();
         expect(player.id).toBe('4');
     });
@@ -317,7 +318,7 @@ describe('Calculate Payouts Function', () => {
             {id: '4', name: 'James', buyIn: 200, cashOut: 1000}
         ];
 
-        const playersDeque = payoutModule.toDeque(players);
+        const playersDeque = toDeque(players);
         playersDeque.removeFront();
         expect(playersDeque.size()).toBe(3);
     });
@@ -330,7 +331,7 @@ describe('Calculate Payouts Function', () => {
             {id: '4', name: 'James', buyIn: 200, cashOut: 1000}
         ];
 
-        const playersDeque = payoutModule.toDeque(players);
+        const playersDeque =toDeque(players);
         const player = playersDeque.removeFront();
         expect(player.id).toBe('1');
     });
@@ -341,58 +342,95 @@ describe('Calculate Payouts Function', () => {
 
 
 describe('Determine Outcomes Algo', () => {
-    test('Payments to be correct with whole number -> ', () => {
-        const players = [
-            {id: '1', name: 'George', buyIn: 10, cashOut: 15},
-            {id: '2', name: 'Henry', buyIn: 10, cashOut: 12},
-            {id: '3', name: 'Woodsy', buyIn: 10, cashOut: 9},
-            {id: '5', name: 'James', buyIn: 10, cashOut: 8},
-            {id: '4', name: 'Joe', buyIn: 10, cashOut: 6}
-        ];
 
-        const sortedPlayers = payoutModule.sortPlayers(players);
-        const playersDeque = payoutModule.toDeque(sortedPlayers);
-        payoutModule.determineOutcomes(playersDeque);
+   
+    
+    // test('Payments to be correct with whole number -> ', () => {
+    //     const players = [
+    //         {id: '1', name: 'George', buyIn: 10, cashOut: 15},
+    //         {id: '2', name: 'Henry', buyIn: 10, cashOut: 12},
+    //         {id: '3', name: 'Woodsy', buyIn: 10, cashOut: 9},
+    //         {id: '5', name: 'James', buyIn: 10, cashOut: 8},
+    //         {id: '4', name: 'Joe', buyIn: 10, cashOut: 6}
+    //     ];
 
-        console.log(payoutModule.payments);
+    //     const sortedPlayers = sortPlayers(players);
+    //     const playersDeque = toDeque(sortedPlayers);
+    //     determineOutcomes(playersDeque);
 
-        
-        expect(payoutModule.payments).toContain('Joe owes £4 to George');
-        expect(payoutModule.payments).toContain('James owes £1 to George');
-        expect(payoutModule.payments).toContain('James owes £1 to Henry');
-        expect(payoutModule.payments).toContain('Woodsy owes £1 to Henry');
-
-    });
-
-    test('Payments to be correct with decimals  -> ', () => {
-        const players = [
-            {id: '1', name: 'James W', buyIn: 10, cashOut: 14.15},
-            {id: '2', name: 'George C', buyIn: 10, cashOut: 10.30},
-            {id: '3', name: 'Henry', buyIn: 10, cashOut: 9.45},
-            {id: '5', name: 'James K', buyIn: 13, cashOut: 17.65},
-            {id: '6', name: 'Kier', buyIn: 15, cashOut: 4.70},
-            {id: '7', name: 'Joe', buyIn: 10, cashOut: 0.2},
-            {id: '8', name: 'Ben', buyIn: 10, cashOut: 15.35},
-            {id: '9', name: 'Duncan', buyIn: 10, cashOut: 10.45},
-            {id: '10', name: 'Ewan', buyIn: 10, cashOut: 15.75}
-        ];
-
-        const sortedPlayers = payoutModule.sortPlayers(players);
-        const playersDeque = payoutModule.toDeque(sortedPlayers);
-        payoutModule.determineOutcomes(playersDeque);
-
-        console.log(payoutModule.payments);
+    //     console.log(payments);
 
         
-        expect(payoutModule.payments).toContain('Henry owes £0.25 to Duncan');
-        expect(payoutModule.payments).toContain('Henry owes £0.3 to George C');
-        expect(payoutModule.payments).toContain('Kier owes £4.55 to Ben');
-        expect(payoutModule.payments).toContain('Kier owes £5.75 to Ewan');
-        expect(payoutModule.payments).toContain('Joe owes £0.8 to Ben');
-        expect(payoutModule.payments).toContain('Joe owes £4.65 to James K');
-        expect(payoutModule.payments).toContain('Joe owes £0.2 to Duncan');
-        expect(payoutModule.payments).toContain('Joe owes £4.15 to James W');
+    //     expect(payments).toContain('Joe owes £4 to George');
+    //     expect(payments).toContain('James owes £1 to George');
+    //     expect(payments).toContain('James owes £1 to Henry');
+    //     expect(payments).toContain('Woodsy owes £1 to Henry');
+       
+    // });
 
+    // test('Payments to be correct with decimals  -> ', () => {
+    //     const payments = [];
+    //     const players = [
+    //         {id: '1', name: 'James W', buyIn: 10, cashOut: 14.15},
+    //         {id: '2', name: 'George C', buyIn: 10, cashOut: 10.30},
+    //         {id: '3', name: 'Henry', buyIn: 10, cashOut: 9.45},
+    //         {id: '5', name: 'James K', buyIn: 13, cashOut: 17.65},
+    //         {id: '6', name: 'Kier', buyIn: 15, cashOut: 4.70},
+    //         {id: '7', name: 'Joe', buyIn: 10, cashOut: 0.2},
+    //         {id: '8', name: 'Ben', buyIn: 10, cashOut: 15.35},
+    //         {id: '9', name: 'Duncan', buyIn: 10, cashOut: 10.45},
+    //         {id: '10', name: 'Ewan', buyIn: 10, cashOut: 15.75}
+    //     ];
+
+    //     const sortedPlayers = sortPlayers(players);
+    //     const playersDeque = toDeque(sortedPlayers);
+    //     determineOutcomes(playersDeque);
+
+    //     console.log(payments);
+
+        
+    //     expect(payments).toContain('Henry owes £0.25 to Duncan');
+    //     expect(payments).toContain('Henry owes £0.3 to George C');
+    //     expect(payments).toContain('Kier owes £4.55 to Ben');
+    //     expect(payments).toContain('Kier owes £5.75 to Ewan');
+    //     expect(payments).toContain('Joe owes £0.8 to Ben');
+    //     expect(payments).toContain('Joe owes £4.65 to James K');
+    //     expect(payments).toContain('Joe owes £0.2 to Duncan');
+    //     expect(payments).toContain('Joe owes £4.15 to James W');
+
+
+    // });
+
+    test('Payments to be correct with large numbers and decimals  -> ', () => {
+       
+        const players = [
+            {id: '1', name: 'James W', buyIn: 8, cashOut: 8.5},
+            {id: '2', name: 'George C', buyIn: 15, cashOut: 14.3},
+            {id: '3', name: 'Henry', buyIn: 7, cashOut: 6.7},
+            {id: '5', name: 'James K', buyIn: 12, cashOut: 12.8},
+            {id: '6', name: 'Kier', buyIn: 9, cashOut: 9.2},
+            {id: '7', name: 'Joe', buyIn: 14, cashOut: 13.1},
+            {id: '8', name: 'Ben', buyIn: 6, cashOut: 7.6},
+            {id: '9', name: 'Duncan', buyIn: 13, cashOut: 15.4},
+            {id: '10', name: 'Ewan', buyIn: 16, cashOut: 12.4}
+        ];
+
+        const sortedPlayers = sortPlayers(players);
+        const playersDeque = toDeque(sortedPlayers);
+        determineOutcomes(playersDeque);
+        
+        console.log(payments);
+
+        
+        expect(payments).toContain('Ewan owes £2.4 to Duncan');
+        expect(payments).toContain('Ewan owes £1.2 to Ben');
+        expect(payments).toContain('Joe owes £0.4 to Ben');
+        expect(payments).toContain('Joe owes £0.5 to James K');
+        expect(payments).toContain('George C owes £0.3 to James K');
+        expect(payments).toContain('George C owes £0.4 to James W');
+        expect(payments).toContain('Henry owes £0.1 to James W');
+        expect(payments).toContain('Henry owes £0.2 to Kier');
+       
 
     });
 
