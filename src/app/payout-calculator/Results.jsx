@@ -1,5 +1,4 @@
-
-export function Results({ players, onBackPressed, testPaymentDetails: payments }){
+export default function Results({ players, onBackPressed, testPaymentDetails: payments }){
     console.log(payments);
 
     return (
@@ -11,17 +10,17 @@ export function Results({ players, onBackPressed, testPaymentDetails: payments }
                     return (
                         <>
 
-                            <li key={players.id}>
+                            <li key={player.id}>
                                 {`${player.name} : £${Number(player.cashOut - player.buyIn).toFixed(2)}`}
                             </li>
                         </>
                     ) 
                 })} 
             </ul>
-            <h2>Payouts Required</h2>
-            {payments.map(detail => {
+            <h2>Payouts Required</h2>           
+            {payments.map((detail, index) => {
                 return (
-                    <p>{` - ${detail}`}</p>
+                    <p key={index}>{` - ${detail}`}</p>
                 )
             })}
             

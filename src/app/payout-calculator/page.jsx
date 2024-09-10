@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { PlayerForm } from "./PlayerForm";
-import { Results } from "./Results";
-import { InvalidValueWarning } from "./InvalidValueWarning";
+import PlayerForm from './PlayerForm';
+import Results from './Results';
+import InvalidValueWarning from './InvalidValueWarning';
 import { v4 as uuidv4 } from 'uuid';
 import './payout.css';
 import { playerFormIsValid } from '../../../utils/payoutUtils/playerFormIsValid';
@@ -12,13 +12,14 @@ import { calculatePayouts } from '../../../utils/payoutUtils/calculatePayouts';
 export var payments = [];
 
 export default function Payout() {
+
     // State for players
     const [players, setPlayers] = useState(() => [{ id: uuidv4(), name: '', buyIn: 0, cashOut: 0 }]);
     // State for results and values
     const [results, setResults] = useState(false);
     const [values, setValues] = useState({ buyIn: 0, cashOut: 0 });
     const [isHydrated, setIsHydrated] = useState(false);
-
+    
     useEffect(() => {
         // Client-side only logic
         if (typeof window !== 'undefined') {
@@ -61,11 +62,15 @@ export default function Payout() {
     // Submit the form and validate
     function submitForm() {
         console.log('submitForm reached');
-        setResults(playerFormIsValid(players));
-        const { totalBuyIn, totalCashOut } = getTotals(players);
-        setValues({ buyIn: totalBuyIn, cashOut: totalCashOut });
-        calculatePayouts(players);          
-        console.log(payments);
+        const validResults = playerFormIsValid(players);
+        setResults(validResults);
+        if (validResults) {
+            const { totalBuyIn, totalCashOut } = getTotals(players);
+            setValues({ buyIn: totalBuyIn, cashOut: totalCashOut });
+            if (totalBuyIn === 0 || totalCashOut === 0) return; 
+            calculatePayouts(players);          
+            console.log(payments);
+        }    
     }
 
     // Reset values and results
@@ -88,29 +93,27 @@ export default function Payout() {
         return null; // Potential Need Loading Screen Here?
     }
 
+    for (const player of players){
+        console.log(`${player.name}The players are ${player.id}`);
+    }
     return (
-        
         <div>
             {results ? (
-                values.buyIn === values.cashOut ? (
-                    <Results players={players} onBackPressed={onBackPressed} testPaymentDetails={payments} />
-                ) : (
-                    <InvalidValueWarning
-                        totalCashOut={values.cashOut}
-                        totalBuyIn={values.buyIn}
-                        onBackPressed={onBackPressed}
+                values.buyIn === values.cashOut ? 
+                (<Results players={players} onBackPressed={onBackPressed} testPaymentDetails={payments} />) 
+                    : 
+                (<InvalidValueWarning totalCashOut={values.cashOut} totalBuyIn={values.buyIn} onBackPressed={onBackPressed}/>)
+            ) 
+                : (
+                    <PlayerForm
+                        data-testid="player-form-item"
+                        submitForm={submitForm}
+                        players={players}
+                        handleInputChange={handleInputChange}
+                        onAddPlayerBtnClick={onAddPlayerBtnClick}
+                        onRemovePlayerBtnClick={onRemovePlayerBtnClick}
                     />
-                )
-            ) : (
-                <PlayerForm
-                    data-testid="player-form-item"
-                    submitForm={submitForm}
-                    players={players}
-                    handleInputChange={handleInputChange}
-                    onAddPlayerBtnClick={onAddPlayerBtnClick}
-                    onRemovePlayerBtnClick={onRemovePlayerBtnClick}
-                />
-            )}
+                )}
         </div>
     );
 }

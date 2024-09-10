@@ -1,6 +1,7 @@
 import { FormRow } from './FormRow'
 
-export function PlayerForm({ submitForm, handleInputChange, players, onAddPlayerBtnClick, onRemovePlayerBtnClick }){
+
+export default function PlayerForm({ submitForm, handleInputChange, players, onAddPlayerBtnClick, onRemovePlayerBtnClick }){
 
 
     if (players === undefined) {
@@ -25,10 +26,10 @@ export function PlayerForm({ submitForm, handleInputChange, players, onAddPlayer
                                 onInputChange={handleInputChange} 
                                 onRemovePlayerBtnClick={onRemovePlayerBtnClick}
                             />
-
                         ))}  
                         <button type='button' onClick={onAddPlayerBtnClick}>Add Player</button> 
-                        <br></br><br></br>
+                        <br></br>
+                        <br></br>
                         <button type="submit">Submit</button>
                     </form>
                 </div>            

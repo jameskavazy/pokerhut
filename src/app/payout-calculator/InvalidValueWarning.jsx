@@ -1,4 +1,4 @@
-export function InvalidValueWarning({ totalBuyIn, totalCashOut, onBackPressed }){
+export default function InvalidValueWarning({ totalBuyIn, totalCashOut, onBackPressed }){
     return (
         
         <div data-testid="payout-warning" className="payout-warning">
@@ -6,5 +6,5 @@ export function InvalidValueWarning({ totalBuyIn, totalCashOut, onBackPressed })
             <p>Total buy-in: {totalBuyIn}. Total cashout: {totalCashOut} </p>
             <button onClick={onBackPressed}>Back</button>
         </div>     
-    )
+    );
 }
