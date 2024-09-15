@@ -1,7 +1,7 @@
 
 # Poker Payout Calculator
 
-Poker Payout Calculator is a web application that helps poker players calculate their profit/loss and determine payout requirements after a cash game. This application is built with Next.js+React frameowrk and AWS services and is designed to provide a simple tool for managing poker game finances.
+Poker Payout Calculator is a web application that helps poker players calculate their profit/loss and determine payout requirements after a cash game. This application is built with Next.js+React framework and AWS services and is designed to provide a simple tool for managing poker game finances.
 
 ## Features
 

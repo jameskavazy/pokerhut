@@ -1,5 +1,5 @@
 'use client';
-import { payments } from "../../src/app/payout-calculator/page";
+import { payments } from "../../src/app/(routes)/payout-calculator/page";
 import { parse } from "./parse";
 
 
@@ -8,8 +8,11 @@ import { parse } from "./parse";
 export function determineOutcomes(playersDeque) {
 
     if (playersDeque.isEmpty()) return;
+    
+    const frontProfit = parse(playersDeque.getFront().profit);
+    const rearProfit = parse(playersDeque.getRear().profit);
 
-    if (parse(playersDeque.getRear().profit) < parse(playersDeque.getFront().profit)) {
+    if (rearProfit < frontProfit) {
         //POP last,  last pays off whole debt to front. 
         const last = playersDeque.removeRear();
 
@@ -20,7 +23,7 @@ export function determineOutcomes(playersDeque) {
         //record transaction
         payments.push(`${last.name} owes £${parse(last.profit)} to ${front.name}`);
 
-    } else if (parse(playersDeque.getRear().profit) > parse(playersDeque.getFront().profit)) {
+    } else if (rearProfit > frontProfit) {
         //Pop First is paid off completely,
         const first = playersDeque.removeFront();
         // update last

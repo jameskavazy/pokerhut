@@ -5,9 +5,9 @@ import Results from './Results';
 import InvalidValueWarning from './InvalidValueWarning';
 import { v4 as uuidv4 } from 'uuid';
 import './payout.css';
-import { playerFormIsValid } from '../../../utils/payoutUtils/playerFormIsValid';
-import { getTotals } from '../../../utils/payoutUtils/getTotals';
-import { calculatePayouts } from '../../../utils/payoutUtils/calculatePayouts';
+import { playerFormIsValid } from '../../../../utils/payoutUtils/playerFormIsValid';
+import { getTotals } from '../../../../utils/payoutUtils/getTotals';
+import { calculatePayouts } from '../../../../utils/payoutUtils/calculatePayouts';
 
 export var payments = [];
 

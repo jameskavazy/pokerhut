@@ -1,7 +1,10 @@
+import { SignupForm } from "./__components/signup-form";
+
 export default function Login() {
     return (
-        <main>
+        <>
             <h2>Register</h2>
-        </main>
+            <SignupForm/>
+        </>
     )
 }
