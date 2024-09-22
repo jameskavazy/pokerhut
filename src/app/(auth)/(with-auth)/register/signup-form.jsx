@@ -2,13 +2,23 @@
 
 import { useFormState, useFormStatus } from 'react-dom'
 import { signup } from '@/app/(auth)/(with-auth)/register/signup';
+import { useRouter } from 'next/navigation';
 
 const initialState = {
-    errors: "",
+    errors: {
+        email: null,
+        password: null,
+        general: null,
+    },
+    success: false,
+   
 }
 
 export function SignupForm(){
     const [state, formAction] = useFormState(signup, initialState);
+    const router = useRouter();
+
+    if (state.success) router.push('/');
 
     return (
         <form action={formAction}>
@@ -28,21 +38,20 @@ export function SignupForm(){
                     <p>Password must:</p>
                     <ul>
                         {state.errors.password.map((error) => (
-                            <li key={error}>- {error} </li>
+                            <li key={error}>{error}</li>
                         ))}
                     </ul>
                 </div>
             )}
 
-            <SubmitButton/>
-
+            {state.errors.general && <p>{state.errors.general}</p>}
+            <SubmitButton/>    
         </form>
     )
 }
 
-function SubmitButton(){
+function SubmitButton(){    
     const { pending } = useFormStatus();
-
     return (
         <button disabled={pending} type='submit'>Sign Up</button>
     )
