@@ -6,7 +6,7 @@ export default function SignIn(){
         <form
             action={async () => {
                 "use server"
-            await signIn("keycloak")
+            await signIn({ redirectTo: "/"})//"keycloak"
         }}
         >
           <button type="submit">Sign In</button>  

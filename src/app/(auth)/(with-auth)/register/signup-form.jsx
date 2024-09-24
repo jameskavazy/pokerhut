@@ -10,8 +10,7 @@ const initialState = {
         password: null,
         general: null,
     },
-    success: false,
-   
+    success: false,   
 }
 
 export function SignupForm(){

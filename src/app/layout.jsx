@@ -11,11 +11,11 @@ export const metadata = {
   description: "Created by JK",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
 
-  const session = async () => {
-    await auth();
-  } 
+  const session = await auth();
+
+ 
 
   return (
     <html lang="en">
@@ -24,10 +24,8 @@ export default function RootLayout({ children }) {
             <Link href="/"><button className="nav-button">Home</button></Link> 
             <Link href="/payout-calculator"><button className="nav-button">Cash Game Payout Calculator</button></Link>
             <Link href="/leaderboard"><button className="nav-button">Leaderboard</button></Link>
-            {!session ? <Link href="/logout"><button className="nav-button">Log Out</button></Link> : <Link href="/login"><button className="nav-button">Log In</button></Link> }
-            <Link href="/register"><button className="nav-button">Sign Up</button></Link>
-            {/* TODO Session Logic to determine Log in and out buttons????*/}
-            
+            {session ? <Link href="/logout"><button className="nav-button">Log Out</button></Link> : <Link href="/login"><button className="nav-button">Log In</button></Link>}
+            <Link href="/register"><button className="nav-button">Sign Up</button></Link>            
             <hr></hr>
             
         </header>   
