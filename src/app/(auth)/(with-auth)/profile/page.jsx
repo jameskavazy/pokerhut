@@ -1,4 +1,4 @@
-import { auth } from "../auth"
+import { auth } from "@/auth"
 
 export default async function ProfileName(){
     const session = await auth();
@@ -7,7 +7,7 @@ export default async function ProfileName(){
 
     return (
         <div>
-            <p>{user.username}</p>
+            <p>{session.user.name}</p>
         </div>
     )
 }

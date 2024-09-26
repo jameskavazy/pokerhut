@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+// export { default } from "next-auth/middleware"
 
 // export function middleware(request){
 //     const token = request.headers.get("Authorization");
@@ -16,6 +17,7 @@ import { NextResponse } from "next/server"
 //     matcher: ["/api/:path*"],
 // }
 
+// export {default} from 'next-auth/middleware'
 
 export function middleware(request){
     // const token = request.headers.get("Authorization");
@@ -26,3 +28,7 @@ export function middleware(request){
     //     return NextResponse.next();
    
 }
+
+// export const config = {
+//     matcher: ["/(with-auth)"]
+// }

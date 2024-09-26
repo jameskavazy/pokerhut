@@ -51,16 +51,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         async session({ session, token }) {
                                 if (session.user){
                                         session.user.id = token.sub;
+                                        session.user.idToken = token.idToken;
                                 }
                                 // session.error = token.error;
-                                console.log({sessionToken: token,
-                                        session,
-                                });
+                                // // console.log({sessionToken: token,
+                                //         session,
+                                // });
                                 return session;
                               },
                 },
-                
-        });
+
+});
 
 function requestRefreshOfAccessToken(token) {
         return fetch(`${process.env.KEYCLOAK_ISSUER}/protocol/openid-connect/token`, {
@@ -76,3 +77,5 @@ function requestRefreshOfAccessToken(token) {
                 cache: "no-store"
         });
 }
+
+
