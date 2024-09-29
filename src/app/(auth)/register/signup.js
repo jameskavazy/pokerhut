@@ -1,6 +1,6 @@
 'use server'
 
-import { SignupFormSchema } from '@/app/(auth)/(with-auth)/register/SignupFormSchema'
+import { SignupFormSchema } from '@/app/(auth)/register/SignupFormSchema'
 import { redirect } from 'next/dist/server/api-utils';
 
 
@@ -21,7 +21,7 @@ export async function signup(state, formData) {
 
 async function createUser(email, password) {
 
-    const token = await fetch('http://localhost:8080/realms/myrealm/protocol/openid-connect/token', {
+    const token = await fetch('http://poker-payout-calculator-auth-1:8080/realms/myrealm/protocol/openid-connect/token', {
         method: "POST",
         body: new URLSearchParams({
             grant_type: 'client_credentials',
@@ -33,12 +33,12 @@ async function createUser(email, password) {
         .then(data => {
             return data.access_token;
         })
-        .catch(error => console.error(error));
+        .catch(error => console.error("Fetching bearer failure", error));
 
     
         const bearerToken = await token;
         try {
-            const userResponse = await fetch('http://localhost:8080/admin/realms/myrealm/users', {
+            const userResponse = await fetch('http://poker-payout-calculator-auth-1:8080/admin/realms/myrealm/users/', {
                 method: 'POST',
                 headers: ({
                     "Authorization": `Bearer ${bearerToken}`,

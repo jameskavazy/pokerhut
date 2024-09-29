@@ -4,13 +4,29 @@ import Keycloak from "next-auth/providers/keycloak"
 //import KeycloakProvider from "next-auth/providers/keycloak";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-        providers: [Keycloak],
+        providers: [Keycloak({
+                jwks_endpoint: `${process.env.AUTH_KEYCLOAK_CONTAINER_URL}/realms/myrealm/protocol/openid-connect/certs`,
+                wellKnown: undefined,
+                issuer: process.env.AUTH_KEYCLOAK_ISSUER,
+                authorization: {
+                        params: {
+                                scope: "openid email profile"
+                        },
+                        url: `${process.env.AUTH_KEYCLOAK_LOCAL_URL}/realms/myrealm/protocol/openid-connect/auth`,
+                },
+                
+                token: `${process.env.AUTH_KEYCLOAK_CONTAINER_URL}/realms/myrealm/protocol/openid-connect/token`,
+                userinfo: `${process.env.AUTH_KEYCLOAK_CONTAINER_URL}/realms/myrealm/protocol/openid-connect/userinfo`,
+                
+                }),
+        ],
         session: {
                 strategy: "jwt",
                 maxAge: 60 * 30
         },
         callbacks: {
                 async jwt({ token, account }) {
+
                         if (account) {
                                 // First-time login, save the `access_token`, its expiry and the `refresh_token`
                                 token.idToken = account.id_token;
@@ -64,7 +80,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 });
 
 function requestRefreshOfAccessToken(token) {
-        return fetch(`${process.env.KEYCLOAK_ISSUER}/protocol/openid-connect/token`, {
+        return fetch(`${process.env.AUTH_KEYCLOAK_CONTAINER_URL}/protocol/openid-connect/token`, {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({
                         client_id: process.env.AUTH_KEYCLOAK_ID,

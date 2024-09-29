@@ -28,6 +28,7 @@ function App(){
       
         <div className="side-panel">
           {/* TODO IMAGE */}
+          
         </div>
     </div>
     </>

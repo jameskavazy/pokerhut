@@ -2,9 +2,6 @@
 import { payments } from "../../src/app/(routes)/payout-calculator/page";
 import { parse } from "./parse";
 
-
-
-
 export function determineOutcomes(playersDeque) {
 
     if (playersDeque.isEmpty()) return;
