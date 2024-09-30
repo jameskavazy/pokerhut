@@ -1,13 +1,13 @@
 'use client';
 import { useEffect, useState } from 'react';
-import PlayerForm from '@/components/payout-calc/PlayerForm';
-import Results from '@/components/payout-calc/Results';
-import InvalidValueWarning from '@/components/payout-calc/InvalidValueWarning';
+import PlayerForm from '../../components/payout-calc/PlayerForm';
+import Results from '../../components/payout-calc/Results';
+import InvalidValueWarning from '../../components/payout-calc/InvalidValueWarning';
 import { v4 as uuidv4 } from 'uuid';
 import './payout.css';
-import { playerFormIsValid } from '@/utils/payoutUtils/playerFormIsValid';
-import { getTotals } from '@/utils/payoutUtils/getTotals';
-import { calculatePayouts } from '@/utils/payoutUtils/calculatePayouts';
+import { playerFormIsValid } from '../../utils/payoutUtils/playerFormIsValid';
+import { getTotals } from '../../utils/payoutUtils/getTotals';
+import { calculatePayouts } from '../../utils/payoutUtils/calculatePayouts';
 
 export var payments = [];
 

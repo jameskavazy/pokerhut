@@ -1,5 +1,5 @@
-import HomeSessionless from "@/components/home/HomeSessionless";
-import {auth} from '@/lib/auth'
+import HomeSessionless from '../components/home/HomeSessionless';
+import { auth } from '../lib/auth';
 import { redirect } from "next/navigation";
 // import { useRouter } from "next/navigation";
 // import { HomeSessionless } from "@/components/home/HomeSessionless"

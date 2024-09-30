@@ -1,4 +1,4 @@
-import { payments } from "@/app/payout-calculator/page";
+import { payments } from "@/payout-calculator/page";
 import { parse } from "./parse";
 
 export function determineOutcomes(playersDeque) {

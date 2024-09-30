@@ -1,7 +1,7 @@
 'use client'
 
 import { useFormState, useFormStatus } from 'react-dom'
-import { signup } from '@/actions/auth/signup/';
+import { signup } from '../../actions/auth/signup';
 import { useRouter } from 'next/navigation';
 
 const initialState = {

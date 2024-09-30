@@ -1,6 +1,6 @@
 "use server"
-import { signOut } from "@/lib/auth";
-import { auth } from '@/lib/auth'
+import { signOut } from '../../lib/auth';
+import { auth } from '../../lib/auth';
 import { redirect } from "next/navigation"
 
 export default async function federatedLogout() {

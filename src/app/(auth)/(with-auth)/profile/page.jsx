@@ -1,8 +1,9 @@
 "use server"
-import { auth } from "@/lib/auth"
+
 import { redirect } from "next/navigation";
-import primsa from "@/lib/db"
+import prisma from "../../../../lib/db";
 import { revalidatePath } from "next/cache";
+import { auth } from "../../../../lib/auth";
 
 
 
