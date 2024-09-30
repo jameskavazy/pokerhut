@@ -1,4 +1,4 @@
-import Deque from "@/app/Deque";
+import Deque from "./Deque";
 
 export function toDeque(playersArr){
     const playersDeque = new Deque();

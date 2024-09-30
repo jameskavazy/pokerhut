@@ -1,5 +1,5 @@
 "use server"
-import { auth } from "@/auth"
+import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation";
 import primsa from "@/lib/db"
 import { revalidatePath } from "next/cache";
@@ -12,12 +12,9 @@ export default async function ProfileName(){
     // const events = await primsa.event.findMany();
     // revalidatePath("/profile");
 
-
-
-    
-        if (!session) {
-            redirect('/login')
-        }
+    if (!session) {
+        redirect('/login')
+    }
     
 
     return (

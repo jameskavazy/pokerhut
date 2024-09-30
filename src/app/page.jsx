@@ -1,36 +1,24 @@
-'use client'
-import { useRouter } from "next/navigation";
+import HomeSessionless from "@/components/home/HomeSessionless";
+import {auth} from '@/lib/auth'
+import { redirect } from "next/navigation";
+// import { useRouter } from "next/navigation";
+// import { HomeSessionless } from "@/components/home/HomeSessionless"
 
-export default function Home() {
+export default async function Home() {
+
+  const session = await auth();
+
+  console.log("The Session is ", session);
+  // const router = useRouter();
+
+  // const registerRoute = () => {
+  //   router.push("/register")
+  // }
+
+
   return (
-    <App></App>
-
-  );
-}
-
-function App(){
-  const router = useRouter();
-
-  const registerRoute = () => {
-    router.push("/login")
-  }
-
+    session == null ? <HomeSessionless/> : <p>Session Available</p>
+  )
   
-  return (
-    <>
-    <div className="container">
-        <div className="home-screen-title">
-          <h1>Full House Payouts</h1>
-          <h2>Straight forward and simple payouts for home games</h2>
-          <br></br>
-          <button className="cta" onClick={registerRoute}>Get Started</button>
-        </div>
-      
-        <div className="side-panel">
-          {/* TODO IMAGE */}
-          
-        </div>
-    </div>
-    </>
-  );
+  
 }

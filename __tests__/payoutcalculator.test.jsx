@@ -1,15 +1,15 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import { PlayerForm } from '@/app/(routes)/payout-calculator/PlayerForm'
+import { PlayerForm } from '@/components/payout-calc/PlayerForm'
 import Payout  from '../src/app/(routes)/payout-calculator/page'
 import { FormRow } from '@/app/(routes)/payout-calculator/FormRow';
-import { playerFormIsValid } from '../utils/payoutUtils/playerFormIsValid';
-import { toDeque } from '../utils/payoutUtils/toDeque';
+import { playerFormIsValid } from '../src/utils/payoutUtils/playerFormIsValid';
+import { toDeque } from '../src/utils/payoutUtils/toDeque';
 import { payments } from '../src/app/(routes)/payout-calculator/page';
-import { determineOutcomes } from '../utils/payoutUtils/determineOutcomes';
-import { getTotals } from '../utils/payoutUtils/getTotals';
+import { determineOutcomes } from '../src/utils/payoutUtils/determineOutcomes';
+import { getTotals } from '../src/utils/payoutUtils/getTotals';
 import Deque from '@/app/Deque';
-import { sortPlayers } from '../utils/payoutUtils/sortPlayers';
+import { sortPlayers } from '../src/utils/payoutUtils/sortPlayers';
 
 const mockSubmitForm = jest.fn();
 const mockHandleInput = jest.fn();

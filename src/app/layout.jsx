@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import router from "next/navigation";
 import Link from "next/link";
-import {auth} from '@/auth'
+import {auth} from '@/lib/auth'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +14,7 @@ export const metadata = {
 export default async function RootLayout({ children }) {
 
   const session = await auth();
-
- 
-
+  
   return (
     <html lang="en">
       <body className={inter.className}>

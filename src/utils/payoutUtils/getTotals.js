@@ -1,4 +1,3 @@
-'use client';
 import { parse } from './parse';
 
 // Calculate and return totals

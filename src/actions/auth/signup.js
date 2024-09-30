@@ -1,6 +1,6 @@
 'use server'
 
-import { SignupFormSchema } from '@/app/(auth)/register/SignupFormSchema'
+import { SignupFormSchema } from '@/actions/auth/SignupFormSchema'
 import { redirect } from 'next/dist/server/api-utils';
 
 

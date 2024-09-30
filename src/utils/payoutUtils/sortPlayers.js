@@ -1,5 +1,3 @@
-'use client';
-
 export function sortPlayers(players) {
     for (const player of players) {
         player.profit = player.cashOut - player.buyIn;
