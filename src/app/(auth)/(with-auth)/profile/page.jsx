@@ -9,7 +9,8 @@ import { auth } from "../../../../lib/auth";
 
 export default async function ProfileName(){
     const session = await auth();
-    
+    console.log(process.env.DATABASE_URL);
+    const events = await prisma.event.findMany();
     // const events = await primsa.event.findMany();
     // revalidatePath("/profile");
 
@@ -21,9 +22,9 @@ export default async function ProfileName(){
     return (
         <div>
             <p>{session.user.name}</p>
-           {/* {events.map((event) => (
+           {events.map((event) => (
             <li key={event.id}>{event.title}</li>
-           ))} */}
+           ))}
         </div>
     )
 }

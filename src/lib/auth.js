@@ -1,9 +1,11 @@
 
 import NextAuth from "next-auth";
 import Keycloak from "next-auth/providers/keycloak"
-//import KeycloakProvider from "next-auth/providers/keycloak";
+import prisma from "./db";
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+        // adapter: PrismaAdapter(prisma),
         providers: [Keycloak({
                 jwks_endpoint: `${process.env.AUTH_KEYCLOAK_CONTAINER_URL}/realms/myrealm/protocol/openid-connect/certs`,
                 wellKnown: undefined,

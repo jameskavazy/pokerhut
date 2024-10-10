@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { signIn } from '../../lib/auth';
 
 export default function HomeSessionless({registerRoute}){
     return (
@@ -9,7 +10,6 @@ export default function HomeSessionless({registerRoute}){
               <h2>Free All-In-One Homegame Tool</h2>
               <br></br>
               <Link href={"/register"}><button className="cta">Get Started</button></Link>
-              <Link href={"/login"}><button className="cta">Sign In</button></Link>
             </div>
           
             <div className="side-panel">
@@ -18,4 +18,7 @@ export default function HomeSessionless({registerRoute}){
         </div>
         </>
       );
+
+
 }
+

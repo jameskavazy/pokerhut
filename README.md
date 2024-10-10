@@ -54,7 +54,7 @@ Poker Payout Calculator is a web application that helps poker players calculate 
 
 - **Authentication and User Profiles:** User management and personalized profiles.
 - **Private Games Event Posts:** Join and host private games by adding your own private game to the event list or browse events near you to join.
-- **Additional Calculators:** Expanding to support to tournament paysouts, specifically determining best structure for blinds and payouts. 
+- **Additional Calculators:** Expanding to support to tournament payouts, specifically determining best structure for blinds and payouts. 
 
 ## Contact
 
