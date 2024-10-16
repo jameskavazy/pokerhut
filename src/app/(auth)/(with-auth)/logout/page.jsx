@@ -1,10 +1,8 @@
-"use client"
-
 import federatedLogout from "../../../../actions/auth/federatedLogout"
+import { SignOut } from "../../../../components/auth/SignOut"
 
-//TODO maybe use a form here and make this a server function
-export default function SignOut(){   
+export default function Logout(){   
     return (
-        <button onClick={() => federatedLogout()}>Sign Out</button>
+        <SignOut/>
     )   
 }

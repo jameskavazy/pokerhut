@@ -1,99 +1,26 @@
 
 import NextAuth from "next-auth";
-import Keycloak from "next-auth/providers/keycloak"
+// import Keycloak from "next-auth/providers/keycloak"
 import prisma from "./db";
+import Google from "next-auth/providers/google"
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-        // adapter: PrismaAdapter(prisma),
-        providers: [Keycloak({
-                jwks_endpoint: `${process.env.AUTH_KEYCLOAK_CONTAINER_URL}/realms/myrealm/protocol/openid-connect/certs`,
-                wellKnown: undefined,
-                issuer: process.env.AUTH_KEYCLOAK_ISSUER,
-                authorization: {
-                        params: {
-                                scope: "openid email profile"
-                        },
-                        url: `${process.env.AUTH_KEYCLOAK_LOCAL_URL}/realms/myrealm/protocol/openid-connect/auth`,
-                },
-                
-                token: `${process.env.AUTH_KEYCLOAK_CONTAINER_URL}/realms/myrealm/protocol/openid-connect/token`,
-                userinfo: `${process.env.AUTH_KEYCLOAK_CONTAINER_URL}/realms/myrealm/protocol/openid-connect/userinfo`,
-                
-                }),
-        ],
-        session: {
-                strategy: "jwt",
-                maxAge: 60 * 30
-        },
+        adapter: PrismaAdapter(prisma),
+        providers: [Google({
+                authorization: "https://accounts.google.com/o/oauth2/auth/authorize?response_type=code&prompt=login",
+        })],
         callbacks: {
-                async jwt({ token, account }) {
-
-                        if (account) {
-                                // First-time login, save the `access_token`, its expiry and the `refresh_token`
-                                token.idToken = account.id_token;
-                                token.accessToken = account.access_token;
-                                token.refreshToken = account.refresh_token;
-                                token.expiresAt = account.expires_at;
-                                return token;
+                async signIn({user, account, profile}){
+                        const existingUser = await prisma.user.findUnique({
+                                where: {email: user.email}
+                        });
+                        if (!existingUser) {
+                                
                         }
 
-                        if (Date.now() < (token.expiresAt * 1000 - 60 * 1000)) {
-                                // Subsequent logins, but the `access_token` is still valid
-                                return token
-                        } else {
-                          // Subsequent logins, but the `access_token` has expired, try to refresh it
-                                try {
-                                        const response = await requestRefreshOfAccessToken(token);
-
-                                        const tokens = await response.json();
-
-                                        if (!response.ok) throw tokens;
-
-                                        const updatedToken = {
-                                                ...token,
-                                                idToken: tokens.id_token,
-                                                accessToken: tokens.access_token,
-                                                expiresAt: Math.floor(Date.now() / 1000 + (tokens.expires_in)),
-                                                refreshToken: tokens.refresh_token ?? token.refreshToken,
-                                                }
-                                                return updatedToken;
-                                        } catch (error) {
-                                                console.error(`Error refreshing access token ${error}. At src/auth.js`);
-                                                return {...token, error: "RefreshTokenAccessError"}
-
-                                        }
-                                }
-                        },
-
-                        async session({ session, token }) {
-                                if (session.user){
-                                        session.user.id = token.sub;
-                                        session.user.idToken = token.idToken;
-                                }
-                                // session.error = token.error;
-                                // // console.log({sessionToken: token,
-                                //         session,
-                                // });
-                                return session;
-                              },
-                },
-
+                        return true
+                }
+        }
 });
-
-function requestRefreshOfAccessToken(token) {
-        return fetch(`${process.env.AUTH_KEYCLOAK_CONTAINER_URL}/protocol/openid-connect/token`, {
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({
-                        client_id: process.env.AUTH_KEYCLOAK_ID,
-                        client_secret: process.env.AUTH_KEYCLOAK_SECRET,
-                        grant_type: "refresh_token",
-                        refresh_token: token.refreshToken,
-
-                }),
-                method: "POST",
-                cache: "no-store"
-        });
-}
-
-

@@ -1,33 +1,23 @@
-"use server"
-
 import { redirect } from "next/navigation";
-import prisma from "../../../../lib/db";
 import { revalidatePath } from "next/cache";
 import { auth } from "../../../../lib/auth";
+import UpdateUsernameForm from "../../../../components/auth/profile/UpdateUsernameForm";
+import ProfilePage from "./ProfilePage";
 
 
 
 export default async function ProfileName(){
     const session = await auth();
-    console.log(process.env.DATABASE_URL);
-    const events = await prisma.event.findMany();
-    // const events = await primsa.event.findMany();
-    // revalidatePath("/profile");
-
+    
     if (!session) {
         redirect('/login')
     }
     
-
+   revalidatePath("/profile")
+   
     return (
-        <div>
-            <p>{session.user.name}</p>
-           {events.map((event) => (
-            <li key={event.id}>{event.title}</li>
-           ))}
-        </div>
-    )
+            <>
+                <UpdateUsernameForm session={session}/> 
+            </>
+       ) 
 }
-
-
-// auth/admin/realms/{realm-name}/users/{id}
