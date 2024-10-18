@@ -13,7 +13,7 @@ export default function UpdateUsernameForm({session}){
     const {
         register,
         handleSubmit,
-        formState: {errors, isSubmitting, isSubmitSuccessful},
+        formState: {errors, isSubmitting},
         setError,
     } = useForm({
         defaultValues: {
@@ -38,14 +38,12 @@ export default function UpdateUsernameForm({session}){
         if (!response.ok) {
             setError("usernameChange", {
                 type: "server",
-                message: response.statusText
+                message: response.statusText,
             });
             return;
         }
     
         const responseData = await response.json();
-    
-        
     
         if (responseData.errors){
             const errors = responseData.errors;
@@ -78,7 +76,7 @@ export default function UpdateUsernameForm({session}){
             {errors.usernameChange && ( 
                 <p>{errors.usernameChange.message}</p>
             )}
-            {isSuccess && !isSubmitting && (
+            {isSuccess && (
                 <p>Profile updated successfully</p>
             )}
             <label htmlFor="usernameChange">Your public username</label><br></br>

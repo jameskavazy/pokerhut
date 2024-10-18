@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { signIn } from '../../lib/auth';
 
-export default function HomeSessionless({registerRoute}){
+export default function HomeSessionless(){
     return (
         <>
         <div className="container">

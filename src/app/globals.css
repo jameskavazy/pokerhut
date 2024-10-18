@@ -14,7 +14,7 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-} */ 
+}  */
 
 .nav-bar {
   margin-top: 2dvb;
@@ -62,6 +62,13 @@
   background-color: #d5dbd6;
   padding: 20%;
   color: black;
+  text-align: left;
+}
+
+.home-screen-events {
+  background-color: #d5dbd6;
+  flex-grow: 2;
+  padding: 12%;
   text-align: left;
 }
 
