@@ -12,15 +12,3 @@ export default function SignIn(){
         </form>
     )
 }
-
-
-// return (
-//     <form
-//         action={async () => {
-//             "use server"
-//         await signIn("keycloak", {redirect: true, redirectTo: "/"});//{redirect: true, redirectTo: "/"}
-//     }}
-//     >
-//       <button type="submit">Sign In</button>  
-//     </form>
-// )

@@ -6,10 +6,10 @@ export const usernameSchema = z.object({
                     .string()
                     .trim()
                     .min(3, "Username must be at least 3 characters in length.")
-                //     .refine(async (usernameChange) => {
-                //         const isAvailable = await isUsernameAvailable(usernameChange);
-                //         return isAvailable;
-                //     }
-                // )
+                    .regex(/^[a-zA-Z0-9.]+$/, {message: "Invalid username. Valid username characters are A-Z, 0-9 and the symbol \".\""})
+                    .refine(async (username) => {
+                        const isUsernameTaken = await isUsernameAvailable(username);  
+                        return isUsernameTaken.length == 0;
+                    }, "Username is already taken." )
 });
 

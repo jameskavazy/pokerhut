@@ -11,16 +11,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         providers: [Google({
                 authorization: "https://accounts.google.com/o/oauth2/auth/authorize?response_type=code&prompt=login",
         })],
-        callbacks: {
-                async signIn({user, account, profile}){
-                        const existingUser = await prisma.user.findUnique({
-                                where: {email: user.email}
-                        });
-                        if (!existingUser) {
-                                
-                        }
-
-                        return true
-                }
-        }
 });

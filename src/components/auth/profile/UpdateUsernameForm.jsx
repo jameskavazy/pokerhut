@@ -2,32 +2,28 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { usernameSchema } from "../../../lib/schemas/usernameSchema";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 
 export default function UpdateUsernameForm({session}){
-    
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    const router = useRouter();
     const {
         register,
         handleSubmit,
         formState: {errors, isSubmitting, isSubmitSuccessful},
-        reset,
         setError,
     } = useForm({
         defaultValues: {
-            usernameChange: session.user.name,
+            usernameChange: session.user.username,
         },
         resolver: zodResolver(usernameSchema),
     });
 
-    useEffect(() => {
-        if (isSubmitSuccessful && !isSubmitting){
-            const timer = setTimeout(() => {
-                reset({usernameChange: session.user.name});
-            }, 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [isSubmitSuccessful, isSubmitting, reset])
-
+    
+    
     async function onSubmit(data){
         console.log("onSubmit reached")
     
@@ -61,9 +57,8 @@ export default function UpdateUsernameForm({session}){
             }
             return;    
         }
-    
-        // if (responseData.success) {
-        // }
+        setIsSuccess(true);
+        router.refresh();
     }
 
     return (
@@ -73,12 +68,13 @@ export default function UpdateUsernameForm({session}){
             type="text" 
             id="usernameChange"
             placeholder="Username"
+            onChange={() => setIsSuccess(false)}
             />
             <br></br>
             {errors.usernameChange && ( 
                 <p>{errors.usernameChange.message}</p>
             )}
-            {isSubmitSuccessful && !isSubmitting && (
+            {isSuccess && !isSubmitting && (
                 <p>Profile updated successfully</p>
             )}
             <label htmlFor="usernameChange">Your public username</label><br></br>

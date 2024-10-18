@@ -3,10 +3,13 @@ import { usernameSchema } from "../../../lib/schemas/usernameSchema";
 import { auth } from '../../../lib/auth'
 import prisma from "../../../lib/db";
 
+
+export const revalidate = true;
+
 export async function POST(request){
     const body = await request.json();
 
-    const result = usernameSchema.safeParse(body);
+    const result = await usernameSchema.safeParseAsync(body);
     
 
     let zodErrors = {};
@@ -18,12 +21,13 @@ export async function POST(request){
     } else {
         const session = await auth();
         if (session) {
+            console.log("POST REQ - Session Valid Posting to Prisvegas")
             await prisma.user.update({
                 where: {
                     id: session.user.id
                 },
                 data: {
-                    name: result.data.usernameChange,
+                    username: result.data.usernameChange,
                 }
             },
             ) 

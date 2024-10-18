@@ -9,7 +9,7 @@ export default function HomeSessionless({registerRoute}){
               <h1>Pokerhut</h1>
               <h2>Free All-In-One Homegame Tool</h2>
               <br></br>
-              <Link href={"/register"}><button className="cta">Get Started</button></Link>
+              <Link href={"/api/auth/signin"}><button className="cta">Get Started</button></Link>
             </div>
           
             <div className="side-panel">

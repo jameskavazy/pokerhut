@@ -1,4 +1,5 @@
 import HomeSessionless from '../components/home/HomeSessionless';
+import prisma from '../lib/db';
 import { auth } from '../lib/auth';
 import { redirect } from "next/navigation";
 // import { useRouter } from "next/navigation";
@@ -7,15 +8,13 @@ import { redirect } from "next/navigation";
 export default async function Home() {
 
   const session = await auth();
-
   console.log("The Session is ", session);
-  // const router = useRouter();
 
-  // const registerRoute = () => {
-  //   router.push("/register")
-  // }
-
-
+  if (session && !session?.user?.username) {
+    redirect("/profile")
+  }
+ 
+ 
   return (
     session == null ? <HomeSessionless/> : <p>Session Available</p>
   )
