@@ -22,15 +22,18 @@ export async function POST(request){
         const session = await auth();
         if (session) {
             console.log("POST REQ - Session Valid Posting to Prisvegas")
-            await prisma.user.update({
-                where: {
-                    id: session.user.id
-                },
-                data: {
-                    username: result.data.usernameChange,
-                }
-            },
-            ) 
+            try {
+                await prisma.user.update({
+                    where: {
+                        id: session.user.id
+                    },
+                    data: {
+                        username: result.data.usernameChange,
+                    }
+                },);
+            } catch (PrismaClientKnownRequestError){
+                return NextResponse.json({error: "Internal server error" }, {status: 500});
+            }
         } else {
             throw Error("Unauthorised")
         }

@@ -36,6 +36,10 @@ export default function UpdateUsernameForm({session}){
         });
 
         if (!response.ok) {
+            setError("usernameChange", {
+                type: "server",
+                message: response.statusText
+            });
             return;
         }
     
