@@ -20,8 +20,11 @@ export default async function ProfileName(){
             <>
                 {!session.user?.username && (
                     <p>Create your public username.</p>
-                )}            
-                <UpdateUsernameForm session={session}/> 
+                )} 
+                <div className="mt-2">
+                    <UpdateUsernameForm session={session}/> 
+                </div>           
+                
             </>
        ) 
 }

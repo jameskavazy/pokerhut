@@ -4,7 +4,6 @@ import PlayerForm from '../../components/payout-calc/PlayerForm';
 import Results from '../../components/payout-calc/Results';
 import InvalidValueWarning from '../../components/payout-calc/InvalidValueWarning';
 import { v4 as uuidv4 } from 'uuid';
-import './payout.css';
 import { playerFormIsValid } from '../../utils/payoutUtils/playerFormIsValid';
 import { getTotals } from '../../utils/payoutUtils/getTotals';
 import { calculatePayouts } from '../../utils/payoutUtils/calculatePayouts';
@@ -61,7 +60,6 @@ export default function Payout() {
 
     // Submit the form and validate
     function submitForm() {
-        console.log('submitForm reached');
         const validResults = playerFormIsValid(players);
         setResults(validResults);
         if (validResults) {
@@ -81,7 +79,6 @@ export default function Payout() {
         setResults(false);
     }
 
-    // Remove a player by ID
     function onRemovePlayerBtnClick(id) {
         setPlayers(currentPlayers =>
             currentPlayers.filter(player => player.id !== id)
@@ -90,14 +87,12 @@ export default function Payout() {
 
     // Prevent render until only after hydration
     if (!isHydrated) {
-        return null; // Potential Need Loading Screen Here?
+        return null;
     }
 
-    for (const player of players){
-        console.log(`${player.name}The players are ${player.id}`);
-    }
+    
     return (
-        <div>
+        <div  className='border-gray-400 m-8 p-12 rounded-3xl '>
             {results ? (
                 values.buyIn === values.cashOut ? 
                 (<Results players={players} onBackPressed={onBackPressed} testPaymentDetails={payments} />) 

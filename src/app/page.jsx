@@ -17,7 +17,10 @@ export default async function Home() {
  
  
   return (
-    session == null ? <HomeSessionless/> : <HomeSessionfull/>
+    <main>
+      {session == null ? <HomeSessionless/> : <HomeSessionfull/>}
+    </main>
+    
   )
   
   
