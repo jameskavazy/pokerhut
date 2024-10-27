@@ -21,7 +21,6 @@ export async function POST(request){
     } else {
         const session = await auth();
         if (session) {
-            console.log("POST REQ - Session Valid Posting to Prisvegas")
             try {
                 await prisma.user.update({
                     where: {

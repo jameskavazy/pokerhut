@@ -6,7 +6,7 @@ export default function PlayerForm({ submitForm, handleInputChange, players, onA
 
 
     if (players === undefined) {
-        players = [{id: '1', name: '', buyIn:'', cashOut: ''}]
+        players = [{id: '1', name: '', buyIn: '', cashOut: ''}];
     }
     return (
             <div className="justify-center">

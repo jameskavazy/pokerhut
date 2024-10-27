@@ -19,7 +19,7 @@ export default async function NavBar(){
                 </Link>
                 {session ? (
                         <Link href="/signout">
-                            <NavButton>Log Out</NavButton>
+                            <NavButton>Sign Out</NavButton>
                         </Link> 
                     ) : ( 
                         <Link href="/api/auth/signin">
@@ -30,7 +30,7 @@ export default async function NavBar(){
                 {session && (
                     <Link href="/profile">
                         <NavButtonPrimary>
-                            Welcome {user.username || user.name}
+                            {user.username || user.name}
                         </NavButtonPrimary>
                     </Link>
                 )}

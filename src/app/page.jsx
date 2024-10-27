@@ -9,7 +9,7 @@ import HomeSessionfull from '../components/home/HomeSessionfull';
 export default async function Home() {
 
   const session = await auth();
-  console.log("The Session is ", session);
+  // console.log("The Session is ", session);
 
   if (session && !session?.user?.username) {
     redirect("/profile")

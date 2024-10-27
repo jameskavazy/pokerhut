@@ -99,15 +99,17 @@ export default function Payout() {
                     : 
                 (<InvalidValueWarning totalCashOut={values.cashOut} totalBuyIn={values.buyIn} onBackPressed={onBackPressed}/>)
             ) 
-                : (
-                    <PlayerForm
+                : ( <div className='justify-center'> 
+                        <PlayerForm
                         data-testid="player-form-item"
                         submitForm={submitForm}
                         players={players}
                         handleInputChange={handleInputChange}
                         onAddPlayerBtnClick={onAddPlayerBtnClick}
                         onRemovePlayerBtnClick={onRemovePlayerBtnClick}
-                    />
+                        />
+                    </div>
+                    
                 )}
         </div>
     );

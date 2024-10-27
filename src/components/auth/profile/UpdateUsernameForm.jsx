@@ -65,13 +65,13 @@ export default function UpdateUsernameForm({session}){
 
     return (
         <>
-            <div className="flex">
-                <div className="flex w-1/12">
+            <div className="flex flex-col justify-center justify-items-center">
+                <div className="flex w-1/6">
                 </div>
-                <div className="md:flex md:w-5/6 md:p-2">
+                <div className="md:flex md:w-5/6 md:p-2" >
                     
                     <p className="md:p-8 ml-8 mr-8 md:border-r-2 md:text-center">
-                        <span className="md:block">Change </span>
+                        <span className="md:block">Change</span>
                         <span className="md:block">username</span> 
                     </p>
                     
@@ -91,7 +91,7 @@ export default function UpdateUsernameForm({session}){
                         )}
                         <label className="text-slate-700 text-sm" htmlFor="usernameChange">Your public username</label><br></br>
                         {isSuccess && (
-                            <p className="text-m">Profile updated successfully.</p>
+                            <p className="text-green-500">Profile updated successfully.</p>
                         )}
                         <br></br>
                         <button className="font-sans px-6 py-4 hover:shadow-md text-white

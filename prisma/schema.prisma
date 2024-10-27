@@ -14,11 +14,18 @@ datasource db {
 }
 
 model Event {
-  id Int @id @default(autoincrement())
-  title String
-  userId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int @id @default(autoincrement())
+  title         String
+  host          User  @relation("EventHost", fields: [hostId], references: [id])
+  hostId        String
+  attendees     User[] @relation("EventAttendees")
+  location      String?
+  time          DateTime
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  limit         Limit?
+  gameType      GameType?
+  blinds        Blinds?
 }
 
 model User {
@@ -30,6 +37,11 @@ model User {
   accounts      Account[]
   sessions      Session[]
   username      String?         @unique    
+  eventsHosted  Event[]         @relation("EventHost")
+  attending     Event[]         @relation("EventAttendees")
+  followedBy    User[]          @relation("UserFollows")
+  following     User[]          @relation("UserFollows")
+
  
  
   createdAt DateTime @default(now())
@@ -74,4 +86,20 @@ model VerificationToken {
  
   @@id([identifier, token])
 }
- 
+
+enum GameType {
+  CashGame
+  Tournament
+}
+
+enum Limit {
+  NoLimit
+  Limit
+}
+
+enum Blinds {
+  SB_010_BB_020
+  SB_025_BB_050
+  SB_050_BB_100
+  SB_100_BB_200
+}

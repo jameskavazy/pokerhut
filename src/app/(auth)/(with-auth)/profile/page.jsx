@@ -9,22 +9,21 @@ export default async function ProfileName(){
     const session = await auth();
     
     if (!session) {
-        redirect('/api/auth/signin')
+        redirect('/api/auth/signin');
     }
 
-
-   revalidatePath("/profile")
-   
+   revalidatePath("/profile");
    
     return (
-            <>
-                {!session.user?.username && (
-                    <p>Create your public username.</p>
-                )} 
-                <div className="mt-2">
-                    <UpdateUsernameForm session={session}/> 
-                </div>           
                 
-            </>
-       ) 
+                <div className=" mt-2 md:p-0 p-1">
+                    <h1 className="md:hidden visible flex justify-center p-20 text-3xl border-b-2">Profile</h1>
+                    {!session.user?.username && (
+                    <p>Create your public username.</p>
+                    )} 
+                    <br></br>
+                    <UpdateUsernameForm session={session}/> 
+                    <br></br>
+                </div>           
+       );
 }
