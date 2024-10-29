@@ -1,9 +1,9 @@
 "use client"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
-import { usernameSchema } from "../../../lib/schemas/usernameSchema";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { usernameSchema } from "../../../lib/schemas/username/usernameSchema";
 
 
 export default function UpdateUsernameForm({session}){

@@ -1,9 +1,20 @@
+import { auth } from "../../lib/auth";
 import DateCard from "./DateCard";
+import prisma from "../../lib/db";
+import { revalidatePath } from "next/cache";
+import Link from "next/link";
 
-export default function EventCard({event}){
+export default async function EventCard({event}){
 
+    const user = (await auth()).user;
+    // console.log(`Event card user session object is ${user.username}`);
     const attendees = event.attendees;
-    // console.log("attendees", attendees)
+    const isHost = event.hostId === user.id;
+
+    const isAttending = attendees.some((attendee) => {
+        return attendee.id === user.id
+    });
+    
 
     return (
         <div className="flex bg-gray-50 rounded-3xl p-12 shadow animate-fade">
@@ -16,7 +27,7 @@ export default function EventCard({event}){
                 <span>
                     <p>{event.title}</p>
                     <p>{event.host.username}</p>
-                    <p>{`${event.time.toLocaleString("en-gb", {hour: '2-digit', minute: "2-digit"})}`}</p>
+                    <p>{event.time.toLocaleString("en-gb", {hour: '2-digit', minute: "2-digit"})}</p>
                 </span>
 
                 <span>
@@ -27,28 +38,83 @@ export default function EventCard({event}){
                 </span>
             </div>
         
-            <div>
-                <form action={async () => {
-                    "use server"
-                    await handleSubmit();
-                }}>
+            <div className="flex">
+                {isAttending ? (
+                        <form
+                            action={async () => {
+                                "use server";
+                                await handleLeave(event);
+                            }}
+                        >
+                            <button className="font-sans md:px-6 md:py-4 text-sm hover:shadow-md text-white bg-red-700 rounded-full
+                             hover:bg-red-600 transition-colors duration-300" type="submit">Leave</button>
+                        </form>
+                    ) : (
+                        <form
+                            action={async () => {
+                                "use server";
+                                await handleJoin(event);
+                            }}
+                        >
+                            <button className="font-sans md:px-6 md:py-4 text-sm hover:shadow-md text-white bg-green-700 rounded-full
+                             hover:bg-green-600 transition-colors duration-300" type="submit">Join</button>
+                        </form>
+                )}
 
-                <button type="submit">Join</button>
-                </form>
-                
+                {isHost && (
+                    //TODO here we can start using URL params to pull state
+                    <Link href={`/events/${event.id}`}> 
+                            <button className="font-sans md:px-6 md:py-4 text-sm hover:shadow-md text-white bg-gray-800 rounded-full
+                            hover:bg-gray-700 transition-colors duration-300" type="submit">Manage Event</button>
+                    </Link>
+               
+                )}
+
             </div>
+
+            
 
         </div>  
     );
 }
 
-async function handleSubmit(){
-    const response = await fetch("api/joinEvent");
+async function handleJoin(event){
+    const eventId = event.id;
+    const user = (await auth()).user;
 
-    if (!response.ok) {
-        return;
+    try {
+        await prisma.event.update({
+            where: {id: eventId},
+            data: {
+                attendees: {
+                    connect: {
+                        id: user.id
+                    }
+                }
+            } 
+        });
+        revalidatePath("/");
+    } catch (error) {
+        console.error("Failed to add user", error);
     }
+}
 
-    
+async function handleLeave(event){
+    const eventId = event.id;
+    const user = (await auth()).user;
+
+    try {
+        await prisma.event.update({
+            where: {id: eventId},
+            data: {
+                attendees: {
+                    disconnect: {id: user.id}
+                }
+            } 
+        });
+        revalidatePath("/");
+    } catch (error) {
+        console.error("Failed to remove user", error);
+    }
 
 }

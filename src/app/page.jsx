@@ -6,7 +6,7 @@ import HomeSessionfull from '../components/home/HomeSessionfull';
 // import { useRouter } from "next/navigation";
 // import { HomeSessionless } from "@/components/home/HomeSessionless"
 
-export default async function Home() {
+export default async function Home({ searchParams }) {
 
   const session = await auth();
   // console.log("The Session is ", session);
@@ -18,7 +18,7 @@ export default async function Home() {
  
   return (
     <main>
-      {session == null ? <HomeSessionless/> : <HomeSessionfull/>}
+      {session == null ? <HomeSessionless/> : <HomeSessionfull searchParams={searchParams}/>}
     </main>
     
   )

@@ -1,4 +1,3 @@
-import federatedLogout from "../../../../actions/auth/federatedLogout"
 import { SignOut } from "../../../../components/auth/SignOut"
 
 export default function Logout(){   
@@ -7,6 +6,7 @@ export default function Logout(){
             <h1 className="text-2xl md:m-0 m-4">Are you sure you want to sign out?</h1>
             <br></br>
             <SignOut/>
+            <br></br>
         </div>
     )   
 }

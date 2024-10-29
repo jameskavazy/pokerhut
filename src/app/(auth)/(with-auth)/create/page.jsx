@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "../../../../lib/auth"
 import Sidepanel from "../../../../components/home/Sidepanel";
-import CreateEventForm from "../../../../components/create/CreateEventForm";
+import CreateEventForm from "../../../../components/events/CreateEventForm";
 
 export default async function CreateEvent(){
 

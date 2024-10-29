@@ -5,7 +5,6 @@ import prisma from "../../../lib/db";
 
 export async function POST(request) {
     const body = await request.json();
-
     const result = await eventSchema.safeParseAsync(body);
 
     let zodErrors = {};
