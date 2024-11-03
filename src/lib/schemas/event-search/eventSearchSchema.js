@@ -1,5 +1,4 @@
 import { z } from 'zod'
 
-export const eventSearchSchema = z.object({           
-    location: z.string(),
-});
+export const eventStringSearchSchema = z.string();
+export const eventDateSearchSchema = z.string().date();

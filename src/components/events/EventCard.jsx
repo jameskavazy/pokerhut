@@ -15,6 +15,24 @@ export default async function EventCard({event}){
         return attendee.id === user.id
     });
     
+    //TODO 
+
+    const BLINDS = {
+        SB_010_BB_020: "£0.10/£0.20",
+        SB_025_BB_050: "£0.25/£0.50",
+        SB_050_BB_100: "£0.50/£1.00",
+        SB_100_BB_200: "£1.00/£2.00"
+    }
+
+    const LIMIT = {
+        NoLimit: "No Limit",
+        Limit: "Limit"
+    }
+
+    const GAME_TYPE = {
+        CashGame: "Cash Game",
+        Tournament: "Tournament"
+    }
 
     return (
         <div className="flex bg-gray-50 rounded-3xl p-12 shadow animate-fade">
@@ -28,6 +46,11 @@ export default async function EventCard({event}){
                     <p>{event.title}</p>
                     <p>{event.host.username}</p>
                     <p>{event.time.toLocaleString("en-gb", {hour: '2-digit', minute: "2-digit"})}</p>
+                    <p>{GAME_TYPE[event.gameType]}</p>
+                    <p>{BLINDS[event.blinds]}</p>
+                    <p>{LIMIT[event.limit]}</p>
+                    
+                    
                 </span>
 
                 <span>
