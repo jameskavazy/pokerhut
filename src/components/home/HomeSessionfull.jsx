@@ -1,47 +1,61 @@
 import prisma from "../../lib/db";
 import { auth } from "../../lib/auth";
-import EventsPage from "../events/EventsPage";
 import Sidepanel from "./Sidepanel";
 import Link from "next/link";
 import CreateEventButton from "../events/CreateEventButton";
 import EventCard from "../events/EventCard";
+import CreateEventForm from "../events/CreateEventForm";
 import { eventDateSearchSchema, eventStringSearchSchema } from "../../lib/schemas/event-search/eventSearchSchema";
 export default async function HomeSessionfull({searchParams}){
 
 
   const session = await auth();
   const user = session.user;
- 
-  
   let events = await getEventsFromParams(searchParams, user);
 
 
-//https://www.youtube.com/watch?v=ukpgxEemXsk&t=45s
+
 
   return (
-    <div className="flex bg-gray-50 mt-1 min-h-screen">  
-          <div className="sticky top-0 h-screen w-1/6 ">
-            <Sidepanel user={user}></Sidepanel>
-          </div>
-          
-          <div className=" flex-grow bg-white p-12 space-y-4" >
-            <h1 className="flex justify-center text-3xl">Discover Events</h1> 
-            <Link href="/create">
-            <div className="flex justify-end">
-              <CreateEventButton >Create Event</CreateEventButton>
-            </div>
+    <>
 
-            </Link>
+      <div>
+        
+        <div className={`w-screen h-screen top-0 left-0 right-0 fixed bg-black bg-opacity-75 z-40 ${searchParams.createEvent ? "visible" : "hidden"}`}></div>
+          
+            <div className={`${searchParams.createEvent ? "visible z-50" : "hidden"} absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-16 rounded-md `}>
+                <CreateEventForm></CreateEventForm>
+            </div>
+          
+          
+
+          <div className="flex bg-gray-50 mt-1 min-h-screen">  
+            <div className="sticky top-24 h-screen w-1/6 ">
+              <Sidepanel user={user}></Sidepanel>
+            </div>
+          
+            <div className=" flex-grow bg-white p-12 space-y-4" >
+              <h1 className="flex justify-center text-3xl">Discover Events</h1> 
+              
+                <div className="flex justify-end">
+                {/* <Link href="/create"> */}
+                  <CreateEventButton >Create Event</CreateEventButton>
+                {/* </Link> */}
+                </div>
+
+                {/* TODO INSERT UPCOMING/PAST CARD/TOGGLE TABS */}
+                {events.map((event) => {
+                  return (
+                  <EventCard key={event.id} event={event}></EventCard>
+                )})}  
+            </div>
             
-            {/* TODO INSERT UPCOMING/PAST CARD/TOGGLE TABS */}
-            {events.map((event) => {
-              return (
-              <EventCard key={event.id} event={event}></EventCard>
-            )})}
-            
-          </div>
+
+        </div>
+        
       </div>
-    
+    </>
+   
   );
 }
 

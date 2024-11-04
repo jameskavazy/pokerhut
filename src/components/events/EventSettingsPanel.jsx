@@ -1,46 +1,46 @@
 "use client"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { eventSchema } from "../../lib/schemas/event-creation/eventSchema"
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { usePathname } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { eventSchema } from "../../lib/schemas/event-creation/eventSchema";
 import { revalidatePath } from "next/cache";
 
 
-export default function CreateEventForm() {
-    const { refresh, replace } = useRouter();
-    const searchParams = useSearchParams();
-    const params = new URLSearchParams(searchParams);
-    const pathname = usePathname();
-
+export default function EventSettingsPanel({event}){
 
     const [isSuccess, setIsSuccess] = useState(false);
-    
+
+
+    const {refresh} = useRouter();
     const {
         register,
-        watch,
         handleSubmit,
         formState: {errors, isSubmitting},
         setError,
-        
     } = useForm({
+        defaultValues: {
+            title: event.title,
+            location: event.location,
+            datetime: event.time.toISOString().substring(0, 16),
+            limit: event.limit,
+            gameType: event.gameType,
+            blinds: event.blinds,
+            id: event.id,
+            hostId: event.hostId,   
+        },
         resolver: zodResolver(eventSchema),
     });
 
-    useEffect(() => {
-        const sub = watch(() => setIsSuccess(false)); 
-        return () => sub.unsubscribe();
-    }, [watch]);
 
 
 
     async function onSubmit(data) {
         //TODO handle submit
         console.log("Submitted Data = ", data);
+      
 
-        const response = await fetch("api/createEvent" , {
+        const response = await fetch("/api/updateEvent" , {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -96,16 +96,15 @@ export default function CreateEventForm() {
             return;
         }
         setIsSuccess(true);
-        // redirect("/");
+        refresh(`/events/${event.id}`)
+        
     }
 
+
     return (
-        <div className="relative">
-            <button className="absolute top-[-3rem] right-[-3rem] justify-end font-sans md:px-2 md:py-2 text-sm hover:shadow-md text-white bg-blue-400 rounded-full hover:bg-blue-300 transition-colors duration-300" onClick={() => {
-                params.delete("createEvent");
-                replace(`${pathname}?${params.toString()}`);
-                refresh();
-            }}>Close</button>
+        <>
+            <p>Settings</p>
+
             <form className="flex flex-col space-y-1" onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="title">Event Title</label>
                 <input {...register("title")} 
@@ -113,7 +112,8 @@ export default function CreateEventForm() {
                     className={`${errors.title?.message ? 
                         "border-2 border-rose-600 focus:outline-none" : "border-slate-400 border-solid border"} p-1 rounded`}
                     name="title" 
-                    type="text" />
+                    type="text" 
+                    />
                 {errors.title && (
                     <p className={`${errors.title.message && "text-rose-600"}`}>
                             {errors.title.message}
@@ -125,7 +125,8 @@ export default function CreateEventForm() {
                         "border-2 border-rose-600 focus:outline-none" : "border-slate-400 border-solid border"} p-1 rounded`}
                     id="location"
                     name="location" 
-                    type="location" />
+                    type="location"
+                  />
                 
                 {errors.location && (
                     <p className={`${errors.location.message} && text-rose-600`}>
@@ -133,13 +134,14 @@ export default function CreateEventForm() {
                     </p>
                 )}
 
-                <label htmlFor="datetime">Start Date and Time</label>
+                <label htmlFor="datetime">When</label>
                 <input {...register("datetime")}
                 className={`${errors.datetime?.message ? 
                     "border-2 border-rose-600 focus:outline-none" : "border-slate-400 border-solid border"} p-1 rounded`}
                 id="datetime"
                 name="datetime"
-                type="datetime-local"/>
+                type="datetime-local"
+                />
 
                 {errors.datetime && (
                     <p className={`${errors.datetime.message} && text-rose-600`}>{errors.datetime.message}</p>
@@ -149,7 +151,8 @@ export default function CreateEventForm() {
                     className={`${errors.limit?.message ? 
                         "border-2 border-rose-600 focus:outline-none" : "border-slate-400 border-solid border"} p-1 rounded`}
                     id="limit" 
-                    name="limit">
+                    name="limit"
+                    >
                         <option value="NoLimit">No Limit</option>
                         <option value="Limit">Limit</option>
                 </select> 
@@ -162,7 +165,8 @@ export default function CreateEventForm() {
                 className={`${errors.gameType?.message ? 
                     "border-2 border-rose-600 focus:outline-none" : "border-slate-400 border-solid border"} p-1 rounded`}
                     id="gameType"
-                    name="gameType">
+                    name="gameType"
+                    >
 
                     <option value="CashGame">Cash Game</option>
                     <option value="Tournament">Tournament</option>
@@ -174,7 +178,8 @@ export default function CreateEventForm() {
                 )}
                 <label htmlFor="blinds">Blinds/Buy In</label>
                 <select {...register("blinds")} id="blinds" name="blinds" className={`${errors.blinds?.message ? 
-                    "border-2 border-rose-600 focus:outline-none" : "border-slate-400 border-solid border"} p-1 rounded`}>
+                    "border-2 border-rose-600 focus:outline-none" : "border-slate-400 border-solid border"} p-1 rounded`}
+                    >
                     <option value="SB_010_BB_020">£0.10/£0.20</option>
                     <option value="SB_025_BB_050">£0.25/£0.50</option>
                     <option value="SB_050_BB_100">£0.50/£1.00</option>
@@ -184,13 +189,13 @@ export default function CreateEventForm() {
                 {errors.blinds && (
                     <p className={`${errors.blinds.message} && text-rose-600`}> {errors.blinds.message}</p>
                 )}
-                <br></br>
-                <button className="font-sans md:px-6 md:py-4 text-sm hover:shadow-md text-white bg-gray-800 rounded-full hover:bg-gray-700 transition-colors duration-300" type="submit">Submit</button>
-                
-                {isSuccess && (<p className="text-green-500">Event created successfully.</p>)}
-            </form>
 
-        </div>
-        
+                <br></br>
+                <button className="font-sans md:px-6 md:py-4 text-sm hover:shadow-md text-white bg-gray-800 rounded-full hover:bg-gray-700 transition-colors duration-300" type="submit">Update</button>
+                {isSuccess && (<p className="text-green-500">Event updated successfully.</p>)}
+            </form>
+        </>
     )
+        
+        
 }

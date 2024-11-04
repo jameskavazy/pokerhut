@@ -69,8 +69,8 @@ export default async function EventCard({event}){
                                 await handleLeave(event);
                             }}
                         >
-                            <button className="font-sans md:px-6 md:py-4 text-sm hover:shadow-md text-white bg-red-700 rounded-full
-                             hover:bg-red-600 transition-colors duration-300" type="submit">Leave</button>
+                            <button className="font-sans md:px-6 md:py-4 text-sm hover:shadow-md text-slate-700 font-bold bg-blue-300 rounded-full
+                             hover:bg-blue-400 transition-colors duration-300" type="submit">Leave</button>
                         </form>
                     ) : (
                         <form
@@ -79,19 +79,20 @@ export default async function EventCard({event}){
                                 await handleJoin(event);
                             }}
                         >
-                            <button className="font-sans md:px-6 md:py-4 text-sm hover:shadow-md text-white bg-green-700 rounded-full
-                             hover:bg-green-600 transition-colors duration-300" type="submit">Join</button>
+                            <button className="font-sans  border-gray-500 md:px-6 md:py-4 text-sm hover:shadow-md text-slate-700 font-bold bg-blue-300 rounded-full
+                             hover:bg-blue-400 transition-colors duration-300" type="submit">Join</button>
                         </form>
                 )}
 
-                {isHost && (
-                    //TODO here we can start using URL params to pull state
+                
+                 
                     <Link href={`/events/${event.id}`}> 
                             <button className="font-sans md:px-6 md:py-4 text-sm hover:shadow-md text-white bg-gray-800 rounded-full
-                            hover:bg-gray-700 transition-colors duration-300" type="submit">Manage Event</button>
+                            hover:bg-gray-700 transition-colors duration-300" type="submit">{isHost ? "Manage Event" : "View Event"}</button>
                     </Link>
+
                
-                )}
+                
 
             </div>
 

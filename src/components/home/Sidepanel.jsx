@@ -50,12 +50,12 @@ export default function Sidepanel({ user }){
             }} className="text-m font-bold mb-4 content-end">All Events</button>
          
             
-           <label>Location Search</label>
+           <label>Location</label>
                 <input className="border-slate-400 border-solid border p-1 rounded" onChange={(e) => {
                     handleQuerySearch(e.target.value, "location");
             }}/>
 
-            <label>Search hosts</label>
+            <label>Hosts</label>
                 <input 
                 placeholder={`${searchParams.get("myEvents") === "1" ? user.username : ""} `}
                 disabled={searchParams.get("myEvents") === "1"}

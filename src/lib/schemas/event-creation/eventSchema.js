@@ -25,6 +25,8 @@ export const eventSchema = z.object({
         {message: "Please select a valid game type"}),
     blinds: z.enum(["SB_010_BB_020", "SB_025_BB_050", "SB_050_BB_100", "SB_100_BB_200"], 
         {message: "Please select a valid blind level"}),
+    id: z.optional(z.number()),
+    hostId: z.optional(z.string()),
 });
 
 
