@@ -21,13 +21,10 @@ export default async function HomeSessionfull({searchParams}){
 
       <div>
         
-        <div className={`w-screen h-screen top-0 left-0 right-0 fixed bg-black bg-opacity-75 z-40 ${searchParams.createEvent ? "visible" : "hidden"}`}></div>
-          
-            <div className={`${searchParams.createEvent ? "visible z-50" : "hidden"} absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-16 rounded-md `}>
-                <CreateEventForm></CreateEventForm>
-            </div>
-          
-          
+        <div ></div>
+                     
+          <CreateEventForm></CreateEventForm>
+            
 
           <div className="flex bg-gray-50 mt-1 min-h-screen">  
             <div className="sticky top-24 h-screen w-1/6 ">
