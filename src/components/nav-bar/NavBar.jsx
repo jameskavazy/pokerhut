@@ -10,7 +10,14 @@ export default async function NavBar(){
 
     return (
         <header className="sticky top-0 z-10 flex justify-around md:justify-center bg-gray-50 p-4 md:py-6 shadow-md w-full">
+            <Link href="/">
+                <p className='font-bold text-3xl'>PokerHut.co.uk</p>
+            </Link>
+           
+
             <div className="flex w-full md:w-3/4 justify-around">
+            
+
                 <Link href="/">
                     <NavButton linkname={"/"}>Home</NavButton>
                 </Link> 
@@ -28,7 +35,7 @@ export default async function NavBar(){
                     )
                 }
                 {session && (
-                    <Link href="/profile">
+                    <Link href="/profile/settings">
                         <NavButtonPrimary>
                             {user.username || user.name}
                         </NavButtonPrimary>

@@ -9,15 +9,14 @@ export default function PlayerForm({ submitForm, handleInputChange, players, onA
         players = [{id: '1', name: '', buyIn: '', cashOut: ''}];
     }
     return (
-            <div className="justify-center">
+            <div className="flex flex-col justify-items-center lg:items-center lg:mt-16 sm:mt-6 md:mt-10 border-2">
 
-                <h1 className='text-2xl md:text-3xl ms-14'>Payout Calculator</h1>
+
+                <h1 className='text-2xl md:text-3xl'>Payout Calculator</h1>
                 
-                <div className="justify-around md:p-14 mt-8 ">
+                <div className="md:p-14 mt-8 ">
                     <form className="justify-end " data-testid="player-form-item" action={submitForm}>
-                        
-                        
-                        
+
                         <div className='md:w-[48rem]'>
                             <div className='md:w-[48rem] md:visible hidden md:flex md:justify-around md:ml-[-5rem] '>
                                 <p >Name</p>

@@ -17,42 +17,24 @@ export default async function HomeSessionfull({searchParams}){
 
 
   return (
-    <>
-
-      <div>
-        
-        <div ></div>
-                     
+      <div className="bg-gray-50" > 
           <CreateEventForm></CreateEventForm>
-            
 
-          <div className="flex bg-gray-50 mt-1 min-h-screen">  
-            <div className="sticky top-24 h-screen w-1/6 ">
-              <Sidepanel user={user}></Sidepanel>
-            </div>
+          <div className="flex mt-1">  
+            <Sidepanel user={user}></Sidepanel>
           
-            <div className=" flex-grow bg-white p-12 space-y-4" >
-              <h1 className="flex justify-center text-3xl">Discover Events</h1> 
-              
-                <div className="flex justify-end">
-                {/* <Link href="/create"> */}
-                  <CreateEventButton >Create Event</CreateEventButton>
-                {/* </Link> */}
-                </div>
-
-                {/* TODO INSERT UPCOMING/PAST CARD/TOGGLE TABS */}
-                {events.map((event) => {
-                  return (
-                  <EventCard key={event.id} event={event}></EventCard>
-                )})}  
+            <div className="flex-grow bg-white p-8 space-y-4" >
+              <h1 className="text-center text-3xl">Discover Events</h1>     
+              <div className="flex justify-end">
+                <CreateEventButton >Create Event</CreateEventButton>
+              </div>
+              {events.map((event) => {
+                return (
+                <EventCard key={event.id} event={event}></EventCard>
+              )})}  
             </div>
-            
-
         </div>
-        
       </div>
-    </>
-   
   );
 }
 
@@ -81,7 +63,7 @@ async function getEventsFromParams(searchParams, user){
     const validateDateFrom = eventDateSearchSchema.safeParse(searchParams.dateFrom);
     if (validateDateFrom.success){
       dateFrom = new Date(validateDateFrom.data);
-    } else dateFrom = new Date(); //searchParams.dateFrom;
+    } else dateFrom = new Date();
   } else {
     dateFrom = new Date();
   }

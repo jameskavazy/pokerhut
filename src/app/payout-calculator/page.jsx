@@ -92,25 +92,23 @@ export default function Payout() {
 
     
     return (
-        <div  className='border-gray-400 m-8 p-12 rounded-3xl '>
-            {results ? (
+        
+            results ? (
                 values.buyIn === values.cashOut ? 
                 (<Results players={players} onBackPressed={onBackPressed} testPaymentDetails={payments} />) 
                     : 
                 (<InvalidValueWarning totalCashOut={values.cashOut} totalBuyIn={values.buyIn} onBackPressed={onBackPressed}/>)
             ) 
-                : ( <div className='justify-center'> 
-                        <PlayerForm
-                        data-testid="player-form-item"
-                        submitForm={submitForm}
-                        players={players}
-                        handleInputChange={handleInputChange}
-                        onAddPlayerBtnClick={onAddPlayerBtnClick}
-                        onRemovePlayerBtnClick={onRemovePlayerBtnClick}
-                        />
-                    </div>
-                    
-                )}
-        </div>
+                : ( 
+                    <PlayerForm
+                    data-testid="player-form-item"
+                    submitForm={submitForm}
+                    players={players}
+                    handleInputChange={handleInputChange}
+                    onAddPlayerBtnClick={onAddPlayerBtnClick}
+                    onRemovePlayerBtnClick={onRemovePlayerBtnClick}
+                    />
+                )
+       
     );
 }

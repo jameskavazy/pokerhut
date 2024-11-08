@@ -1,7 +1,7 @@
 export default function InvalidValueWarning({ totalBuyIn, totalCashOut, onBackPressed }){
     
     return (
-                <div className="flex flex-col justify-center justify-items-center border-2 border-red-50" data-testid="payout-warning">
+                <div className="flex flex-col justify-center items-center mt-16 mb-16" data-testid="payout-warning">
                     <p className="text-lg">The buy-in and cash-out values do not match</p>
                     <p className="text-lg">Total buy-in: {totalBuyIn}. Total cashout: {totalCashOut} </p>
                 <br></br>

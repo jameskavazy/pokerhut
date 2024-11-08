@@ -17,7 +17,7 @@ export default async function Home({ searchParams }) {
  
  
   return (
-    <main>
+    <main >
       {session == null ? <HomeSessionless/> : <HomeSessionfull searchParams={searchParams}/>}
     </main>
     

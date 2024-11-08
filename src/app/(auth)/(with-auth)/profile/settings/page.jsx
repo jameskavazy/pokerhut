@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { auth } from "../../../../lib/auth";
-import UpdateUsernameForm from "../../../../components/auth/profile/UpdateUsernameForm";
+import { auth } from "../../../../../lib/auth";
+import UpdateUsernameForm from "../../../../../components/auth/profile/UpdateUsernameForm";
 
 
 

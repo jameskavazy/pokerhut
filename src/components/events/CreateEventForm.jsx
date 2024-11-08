@@ -100,13 +100,15 @@ export default function CreateEventForm() {
     }
 
     return (
-        <div className={`w-screen h-screen top-0 left-0 right-0 fixed bg-black bg-opacity-75 z-40 ${searchParams.get("createEvent") ? "visible" : "hidden"}`}
+        <div className={`w-screen h-screen top-0 left-0 right-0 fixed bg-black bg-opacity-75 z-10 ${searchParams.get("createEvent") ? "visible" : "hidden"}`}
         onClick={() => { 
-            console.log("div clicked")
             params.delete("createEvent");
             replace(`${pathname}?${params.toString()}`);
+            refresh()
         }}>
-            <div className={`${searchParams.get("createEvent") ? "visible z-50" : "hidden"} absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-16 rounded-md `}>
+            <div 
+            onClick={(e) => e.stopPropagation()}
+            className={`${searchParams.get("createEvent") ? "visible z-50" : "hidden"} absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-16 rounded-md `}>
                     
                     <button className="absolute top-0 right-0 mt-2 mr-2 justify-end font-sans md:px-2 md:py-2 text-sm hover:shadow-md text-white bg-blue-400 rounded-full hover:bg-blue-300 transition-colors duration-300" onClick={() => {
                         params.delete("createEvent");

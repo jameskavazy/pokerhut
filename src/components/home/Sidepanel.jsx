@@ -1,17 +1,26 @@
 "use client"
-import Link from "next/link"
-import { redirect, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { eventDateSearchSchema, eventStringSearchSchema } from "../../lib/schemas/event-search/eventSearchSchema";
-import { useEffect } from "react";
 
 
 export default function Sidepanel({ user }){
+
+    function handleToggle(event) {
+        if (event.target.checked){
+            params.set("myEvents", 1)
+            replace(`${pathname}?${params.toString()}`)
+        } else {
+            params.delete("myEvents")
+            replace(`${pathname}?${params.toString()}`)
+        }
+    }
+
     const searchParams = useSearchParams();
     const pathname = usePathname();
-    const { push, replace } = useRouter();
+    const { replace } = useRouter();
     const params = new URLSearchParams(searchParams);
     const today = new Date();
     const todayDate = today.toISOString("en-gb").substring(0, 10);
@@ -33,21 +42,30 @@ export default function Sidepanel({ user }){
     
 
     return (
-        <div className="w-1/6 bg-gray-50 p-12 h-screen">
-            <label>Date From</label>
-            <input type="date" defaultValue={todayDate} onChange={(e) => handleQuerySearch(e.target.value, "dateFrom")}></input>
-            <label>Date To</label>
-            <input type="date" defaultValue={thirtyDaysDate} onChange={(e) => handleQuerySearch(e.target.value, "dateTo")}></input>
-    
-            <button onClick={() => {
-                params.set("myEvents", 1)
-                replace(`${pathname}?${params.toString()}`);
+        <div className="sticky top-24 h-screen w-1/6 p-12">
+            {/* <h4 className=" text-3xl p-4">Filter Events</h4> */}
 
-            }} className="text-m font-bold mb-4 content-end">My events</button>
-            <button onClick={() => {
-                params.delete("myEvents")
-                replace(`${pathname}?${params.toString()}`)
-            }} className="text-m font-bold mb-4 content-end">All Events</button>
+            <div className="flex flex-col justify-between">
+                <label htmlFor="dateFrom">Date From</label>
+                <input className="text-lg" id="dateFrom" type="date" defaultValue={todayDate} onChange={(e) => handleQuerySearch(e.target.value, "dateFrom")}></input>
+                <label htmlFor="dateTo">Date To</label>
+                <input className="text-lg" id="dateTo"type="date" defaultValue={thirtyDaysDate} onChange={(e) => handleQuerySearch(e.target.value, "dateTo")}></input>
+            </div>
+            
+            <div className="flex flex-col pt-1 pb-2">  
+                <span>My Events</span>          
+                <label className="relative inline-block w-16 h-8"> 
+                    <input type="checkbox" className="sr-only peer" onChange={handleToggle} />
+                    <span
+                    className="absolute inset-0 bg-gray-300 rounded-full transition duration-300 peer-checked:bg-blue-500"
+                    ></span>
+                    <span
+                    className="absolute left-1 top-1 h-6 w-6 bg-white rounded-full transition-transform duration-300 transform peer-checked:translate-x-8"
+                    ></span>
+                    
+                </label>
+                
+            </div>
          
             
            <label>Location</label>
