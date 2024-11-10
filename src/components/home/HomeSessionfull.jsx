@@ -17,24 +17,31 @@ export default async function HomeSessionfull({searchParams}){
 
 
   return (
-      <div className="bg-gray-50" > 
+      <div className="bg-gray-50 flex" > 
           <CreateEventForm></CreateEventForm>
 
-          <div className="flex mt-1">  
-            <Sidepanel user={user}></Sidepanel>
           
-            <div className="flex-grow bg-white p-8 space-y-4" >
-              <h1 className="text-center text-3xl">Discover Events</h1>     
+          <Sidepanel user={user}></Sidepanel>
+          
+
+        <div className="flex-grow p-12 bg-white " >
+              <h1 className="text-center text-3xl">Discover Events</h1> 
+
               <div className="flex justify-end">
                 <CreateEventButton >Create Event</CreateEventButton>
               </div>
-              {events.map((event) => {
-                return (
-                <EventCard key={event.id} event={event}></EventCard>
-              )})}  
-            </div>
+
+              <div className="p-8 space-y-4">
+                {events.map((event) => {
+                  return (
+                  <EventCard key={event.id} event={event}></EventCard>
+                )})}  
+              </div>
+          
         </div>
+
       </div>
+      
   );
 }
 

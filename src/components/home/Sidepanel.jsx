@@ -8,16 +8,6 @@ import { useDebouncedCallback } from "use-debounce";
 
 export default function Sidepanel({ user }){
 
-    function handleToggle(event) {
-        if (event.target.checked){
-            params.set("myEvents", 1)
-            replace(`${pathname}?${params.toString()}`)
-        } else {
-            params.delete("myEvents")
-            replace(`${pathname}?${params.toString()}`)
-        }
-    }
-
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
@@ -27,6 +17,15 @@ export default function Sidepanel({ user }){
     const thirtyDays = new Date(today.setTime(today.getTime() + 30 * 24 * 60 * 60 * 1000));
     const thirtyDaysDate = thirtyDays.toISOString("en-gb").substring(0 , 10);
 
+    function handleToggle(event) {
+        if (event.target.checked){
+            params.set("myEvents", 1)
+            replace(`${pathname}?${params.toString()}`)
+        } else {
+            params.delete("myEvents")
+            replace(`${pathname}?${params.toString()}`)
+        }
+    }
 
     const handleQuerySearch = useDebouncedCallback((query, field) => {
         if (query){

@@ -12,11 +12,6 @@ export default function CreateEventButton({children}) {
     const pathname = usePathname();
     const { replace } = useRouter();
 
-
-   
-
-    //TODO set URL search params into URL for dialog=1 or dialogue = 0
-
     return (
         <button onClick={() => {
             params.set("createEvent", "1");

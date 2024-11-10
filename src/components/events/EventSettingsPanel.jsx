@@ -102,8 +102,7 @@ export default function EventSettingsPanel({event}){
 
 
     return (
-        <>
-            <p>Settings</p>
+        <div className="flex flex-col">
 
             <form className="flex flex-col space-y-1" onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="title">Event Title</label>
@@ -194,7 +193,7 @@ export default function EventSettingsPanel({event}){
                 <button className="font-sans md:px-6 md:py-4 text-sm hover:shadow-md text-white bg-gray-800 rounded-full hover:bg-gray-700 transition-colors duration-300" type="submit">Update</button>
                 {isSuccess && (<p className="text-green-500">Event updated successfully.</p>)}
             </form>
-        </>
+        </div>
     )
         
         
