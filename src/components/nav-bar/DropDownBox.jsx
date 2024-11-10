@@ -29,9 +29,8 @@ export default function DropDownBox({user, options}){
 
 
     return (
-            <div ref={dropDownRef}>
+            <div ref={dropDownRef} className="p-2">
                 <button
-                
                 className={`${isOpen && "border border-[#363a4115]"} px-4 py-2 flex items-center rounded hover:shadow-md hover:bg-gray-100 transition duration-300`}
                 onClick={toggleDropDown}>
                     <span className="flex"> 
