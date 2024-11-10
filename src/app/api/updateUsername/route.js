@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { usernameSchema } from "../../../lib/schemas/usernameSchema";
+import { usernameSchema } from "../../../lib/schemas/username/usernameSchema";
 import { auth } from '../../../lib/auth'
 import prisma from "../../../lib/db";
 

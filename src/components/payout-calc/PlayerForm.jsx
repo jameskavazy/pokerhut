@@ -9,22 +9,13 @@ export default function PlayerForm({ submitForm, handleInputChange, players, onA
         players = [{id: '1', name: '', buyIn: '', cashOut: ''}];
     }
     return (
-            <div className="flex flex-col justify-items-center lg:items-center lg:mt-16 sm:mt-6 md:mt-10 border-2">
-
-
-                <h1 className='text-2xl md:text-3xl'>Payout Calculator</h1>
+            <div className="lg:mt-16 sm:mt-6 md:mt-10 p-10">
+                <h1 className='text-2xl md:text-3xl sm:text-xl text-center'>Payout Calculator</h1>
                 
-                <div className="md:p-14 mt-8 ">
-                    <form className="justify-end " data-testid="player-form-item" action={submitForm}>
-
-                        <div className='md:w-[48rem]'>
-                            <div className='md:w-[48rem] md:visible hidden md:flex md:justify-around md:ml-[-5rem] '>
-                                <p >Name</p>
-                                <p className='md:ml-[-1rem]'>Bought In</p>
-                                <p className='md:ml-[-6rem]'>Cashed Out</p>
-                            </div>
-                            
-                            
+                
+                <div className="flex lg:flex-row flex-col justify-center lg:w-2/3 md:w-3/4 sm:w-11/12 mx-auto">
+                                       
+                    <form data-testid="player-form-item" action={submitForm}>                        
                             {players.map((player) => (
                                 <FormRow
                                     key={player.id}
@@ -36,21 +27,19 @@ export default function PlayerForm({ submitForm, handleInputChange, players, onA
                                     onRemovePlayerBtnClick={onRemovePlayerBtnClick}
                                 />
                             ))}  
-                            
-                            
-                            <button className='font-sans px-8 py-2 hover:shadow-md text-white bg-blue-500 rounded-full
-                                    hover:bg-blue-200 transition-colors duration-300' onClick={onAddPlayerBtnClick}>Add Player</button> 
-                            <br></br>
-                            <br></br>
-                            <button className="font-sans px-8 py-2 hover:shadow-md text-white bg-gray-800 rounded-full
-                                    hover:bg-gray-700 transition-colors duration-300" type="submit">
-                                Submit
-                            </button>
-
-                        </div>
+                       
                         
+                        <button className='font-sans px-8 py-2 hover:shadow-md text-white bg-blue-500 rounded-full
+                                hover:bg-blue-200 transition-colors duration-300' onClick={onAddPlayerBtnClick}>Add Player</button> 
+                        <br></br>
+                        <br></br>
+                        <button className="font-sans px-8 py-2 hover:shadow-md text-white bg-gray-800 rounded-full
+                                hover:bg-gray-700 transition-colors duration-300" type="submit">
+                            Submit
+                        </button>
                     </form>
-                </div>            
+                </div> 
+                           
             </div>
             
     );

@@ -8,7 +8,6 @@ import PlaceholderProfileImage from "../user/PlaceholderProfileImage";
 export default async function EventCard({event}){
 
     const user = (await auth()).user;
-    // console.log(`Event card user session object is ${user.username}`);
     const attendees = event.attendees;
     const isHost = event.hostId === user.id;
 

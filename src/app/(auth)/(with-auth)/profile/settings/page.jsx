@@ -17,9 +17,9 @@ export default async function ProfileName(){
     return (
                 
                 <div className=" mt-2 md:p-0 p-1">
-                    <h1 className="md:hidden visible flex justify-center p-20 text-3xl border-b-2">Profile</h1>
+                    <h1 className="md:hidden visible flex justify-center p-20 text-3xl border-b-2">Profile Settings</h1>
                     {!session.user?.username && (
-                    <p>Create your public username.</p>
+                    <p className="text-center text-lg p-2">Create your public username.</p>
                     )} 
                     <br></br>
                     <UpdateUsernameForm session={session}/> 

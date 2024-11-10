@@ -12,7 +12,7 @@ export default async function Home({ searchParams }) {
   // console.log("The Session is ", session);
 
   if (session && !session?.user?.username) {
-    redirect("/profile")
+    redirect("/profile/settings")
   }
  
  

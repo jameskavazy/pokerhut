@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 
 export default function CreateEventForm() {

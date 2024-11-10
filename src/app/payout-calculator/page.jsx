@@ -92,8 +92,8 @@ export default function Payout() {
 
     
     return (
-        
-            results ? (
+        <div className='w-full'>
+            {results ? (
                 values.buyIn === values.cashOut ? 
                 (<Results players={players} onBackPressed={onBackPressed} testPaymentDetails={payments} />) 
                     : 
@@ -108,7 +108,9 @@ export default function Payout() {
                     onAddPlayerBtnClick={onAddPlayerBtnClick}
                     onRemovePlayerBtnClick={onRemovePlayerBtnClick}
                     />
-                )
+                )}
+        </div>
+            
        
     );
 }
