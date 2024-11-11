@@ -12,8 +12,8 @@ export default function PlayerForm({ submitForm, handleInputChange, players, onA
             <div className="lg:mt-16 sm:mt-6 md:mt-10 p-10">
                 <h1 className='text-2xl md:text-3xl sm:text-xl text-center'>Payout Calculator</h1>
                 
-                
-                <div className="flex lg:flex-row flex-col justify-center lg:w-2/3 md:w-3/4 sm:w-11/12 mx-auto">
+                {/* flex mt-12 lg:flex-row flex-col lg:justify-center lg:w-2/3 md:w-3/4 sm:w-11/12 mx-auto */}
+                <div className="flex justify-center mt-12">
                                        
                     <form data-testid="player-form-item" action={submitForm}>                        
                             {players.map((player) => (

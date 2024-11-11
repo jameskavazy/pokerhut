@@ -10,11 +10,13 @@ export default async function NavBar() {
     const session = await auth();
     const user = session?.user;
 
-    const OPTIONS = [
+    const options = [
+        {id: 4, content: "Payout Calculator", link: `/payout-calculator`},
         {id: 1, content: "Profile", link: `/profile/${user?.username}`},
         {id: 2, content: "Settings", link: `/profile/settings`},
-        {id: 3, content: "Sign Out", link: `/signout`},
+        {id: 3, content: "Sign Out", link: `/signout`},     
     ]
+
 
 
 
@@ -22,16 +24,16 @@ export default async function NavBar() {
         <header className="sticky top-0 z-10 flex justify-around md:justify-center bg-gray-50 p-4 md:py-6 shadow-md w-full">
             <div className="p-2">
                 <Link href="/">
-                    <p className='font-bold text-3xl'>PokerHut.co.uk</p>
+                    <p className='font-bold lg:text-3xl'>pokerhut.co.uk</p>
                 </Link>
             </div>
             
-            <div className="flex w-full md:w-3/4 justify-center gap-4">
+            <div className="sm:flex w-full md:w-3/4 justify-center gap-4 sm:visible hidden">
                 <Link href="/">
                     <NavButton linkname={"/"}>Home</NavButton>
                 </Link> 
                 <Link href="/payout-calculator">
-                    <NavButton linkname={"/payout-calculator"}>Cash Game Payout Calculator</NavButton>
+                    <NavButton linkname={"/payout-calculator"}>Payout Calculator</NavButton>
                 </Link>
             </div> 
             <div>
@@ -42,7 +44,7 @@ export default async function NavBar() {
                     )
                 }
                 {session && (
-                    <DropDownBox user={user} options={OPTIONS}></DropDownBox>
+                    <DropDownBox user={user} options={options}></DropDownBox>
                 )}    
             </div>
                            

@@ -93,7 +93,7 @@ export default async function EventPage({params}){
                                             
                                             <form action={async () => { 
                                                 "use server"
-                                                if (event.hostId === user.id) {
+                                                if (event.hostId === user.id || attendee.id === user.id) {
         
                                                     await prisma.event.update({
                                                         where: {

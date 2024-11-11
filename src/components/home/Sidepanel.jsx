@@ -8,6 +8,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 export default function Sidepanel({ user }){
 
+    const [panelVisible, setPanelVisible] = useState()
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
@@ -16,6 +17,13 @@ export default function Sidepanel({ user }){
     const todayDate = today.toISOString("en-gb").substring(0, 10);
     const thirtyDays = new Date(today.setTime(today.getTime() + 30 * 24 * 60 * 60 * 1000));
     const thirtyDaysDate = thirtyDays.toISOString("en-gb").substring(0 , 10);
+
+    let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    if (vw > 1200) {
+        panelVisible(false)
+    }
+    // let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+
 
     function handleToggle(event) {
         if (event.target.checked){
@@ -38,12 +46,22 @@ export default function Sidepanel({ user }){
     }, 300);
 
 
+    const handleSidebarToggle = () => {
+        console.log("panel hit")
+        setPanelVisible(!panelVisible);
+    }
+
     
 
     return (
-        <div className="sticky top-24 h-screen w-1/6 p-12">
-            {/* <h4 className=" text-3xl p-4">Filter Events</h4> */}
 
+        <>
+
+        <div className="md:hidden flex h-full border-2 p-2">
+            <button onClick={handleSidebarToggle}>|||</button>
+        </div>
+       
+        <div className={`md:sticky md:top-24 md:h-screen md:w-1/6 md:p-12 md:block ${panelVisible ? "z-20 visible" : "hidden"}`}>
             <div className="flex flex-col justify-between">
                 <label htmlFor="dateFrom">Date From</label>
                 <input className="text-lg" id="dateFrom" type="date" defaultValue={todayDate} onChange={(e) => handleQuerySearch(e.target.value, "dateFrom")}></input>
@@ -70,18 +88,20 @@ export default function Sidepanel({ user }){
            <label>Location</label>
                 <input className="border-slate-400 border-solid border p-1 rounded" onChange={(e) => {
                     handleQuerySearch(e.target.value, "location");
-            }}/>
+                }}/>
 
             <label>Hosts</label>
                 <input 
                 placeholder={`${searchParams.get("myEvents") === "1" ? user.username : ""} `}
                 disabled={searchParams.get("myEvents") === "1"}
-                 className={`border-slate-400 border-solid border p-1 rounded 
-                ${searchParams.get("myEvents") === "1" && "bg-slate-200"}`} 
-                onChange={(e) => {handleQuerySearch(e.target.value, "host");
-            }}/>
+                className={`border-slate-400 border-solid border p-1 rounded 
+                    ${searchParams.get("myEvents") === "1" && "bg-slate-200"}`} 
+                    onChange={(e) => {handleQuerySearch(e.target.value, "host");
+                    }}/>
    
         </div>
-    )
+    </>
+    );
+    
 }
 

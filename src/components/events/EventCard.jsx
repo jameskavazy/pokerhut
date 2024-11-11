@@ -49,7 +49,7 @@ export default async function EventCard({event}){
                 <p className="font-bold">{event.title}</p>
                 <div className="flex gap-2">
                     <span>
-                        {event.host.image ? <img src={event.host.image} alt="user image" width={20} className="rounded-full translate-y-[2px]"/> : <PlaceholderProfileImage/>}
+                        {event.host.image ? <img src={event.host.image} alt="user image" width="20px" className="rounded-full translate-y-[2px]"/> : <PlaceholderProfileImage/>}
                     </span>
                    
                     <p>{event.host.username}</p>
@@ -94,6 +94,8 @@ export default async function EventCard({event}){
                 </div>
             
                 <div className="flex flex-col justify-between justify-items-end gap-2">
+                    <span className="flex justify-center">
+
                     {isAttending ? (
                             <form
                                 action={async () => {
@@ -101,8 +103,8 @@ export default async function EventCard({event}){
                                     await handleLeave(event);
                                 }}
                             >
-                                <button className="font-sans p-2 text-sm hover:shadow-md text-white bg-slate-700 rounded-full
-                                hover:bg-slate-400 transition-colors duration-300" type="submit">Leave</button>
+                                <button className={`text-white border border-[#363a4115] px-4 py-2 flex items-center rounded shadow-sm hover:shadow-md hover:bg-[#d67a7abd] bg-[#d67a7a] first-letter:transition duration-300`}
+                                        type="submit">Leave</button>
                             </form>
                         ) : (
                             <form
@@ -111,22 +113,27 @@ export default async function EventCard({event}){
                                     await handleJoin(event);
                                 }}
                             >
-                                <button className="font-sans text-white border-gray-500 p-2 text-sm hover:shadow-md bg-slate-700 rounded-full
-                                hover:bg-slate-400 transition-colors duration-300" type="submit">Join</button>
+                                <button className={`border text-white border-[#363a4115] px-4 py-2 flex items-center rounded shadow-sm hover:shadow-md hover:bg-[#4651f1a6] bg-[#4651f1c0] transition duration-300`} 
+                                        type="submit">Join</button>
                             </form>
                     )}
+                    </span>
 
                     
                     
                         <Link href={`/events/${event.id}`}> 
-                                <button className="font-sans p-2 text-sm hover:shadow-md text-white bg-indigo-700 rounded-full
-                                hover:bg-gray-700 transition-colors duration-300" type="submit">{isHost ? "Manage Event" : "View Event"}</button>
+                                <button 
+                                className={`border border-[#363a4115] px-4 py-2 flex items-center rounded shadow-sm hover:shadow-md hover:bg-gray-200 bg-gray-100 transition duration-300`}>
+                                    View Event
+                                </button>
                         </Link>
                 </div>
             </div>
         </div>  
     );
 }
+// // className="font-sans p-2 text-sm hover:shadow-md text-white bg-indigo-700 rounded-full
+                                // hover:bg-gray-700 transition-colors duration-300" type="submit">{isHost ? "Manage Event" : "View Event"}
 
 async function handleJoin(event){
     const eventId = event.id;

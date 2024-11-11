@@ -43,7 +43,8 @@ export default function DropDownBox({user, options}){
                             {options.map((option) => {
                                 return (
                                 <li key={option["id"]} >
-                                    <button className={`flex z-20 items-center w-full gap-2 p-4 hover:bg-[#e7e7e7] rounded transition-all duration-200 `}
+                                    <button className={`flex z-20 items-center w-full gap-2 p-4 hover:bg-[#e7e7e7] rounded 
+                                                    transition-all duration-200 ${option["content"] === "Payout Calculator" ? "sm:hidden" : "visible" }`}
                                      onClick={() => {
                                                 router.push(option["link"])
                                                 setIsOpen(false);
