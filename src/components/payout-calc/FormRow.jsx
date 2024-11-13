@@ -4,7 +4,7 @@ export function FormRow({ id, name, buyIn, cashOut, onInputChange, onRemovePlaye
         <div className="flex flex-col ">  
            
             <span className="flex justify-end gap-2">
-                <label className="">Name</label>
+                <label className="text-xs md:text-md">Name</label>
                     <input 
                         id={id} 
                         className="border-slate-400 border-solid border rounded" 
@@ -19,9 +19,9 @@ export function FormRow({ id, name, buyIn, cashOut, onInputChange, onRemovePlaye
             
             
             <span className="flex justify-end gap-2">
-                <label className="">Bought In</label>
+                <label className="text-xs md:text-md">Buy In</label>
                 <input 
-                    className="border-slate-400 border-solid border rounded " 
+                    className="border-slate-400 border-solid border rounded" 
                     type="number" 
                     placeholder="Buy In" 
                     value={buyIn}
@@ -31,7 +31,7 @@ export function FormRow({ id, name, buyIn, cashOut, onInputChange, onRemovePlaye
             </span>
 
             <span className="flex justify-end gap-2">
-                <label className="">Cashed Out</label>
+                <label className="text-xs md:text-md">Cash Out</label>
                 <input 
                     className="border-slate-400 border-solid border rounded" 
                     type="number" 

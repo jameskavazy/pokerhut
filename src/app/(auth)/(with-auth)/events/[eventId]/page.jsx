@@ -50,24 +50,24 @@ export default async function EventPage({params}){
     });
 
     if (event) {
-        isHost = event.hostId === user.id;
+        isHost = event.hostId === user?.id;
     }
 
     
     return ( event ? 
         <>
             <CancelEventModal params={params}/>
-            <h1 className="mt-6 ml-20 text-3xl text-center">{event.title}</h1>  
+            <h1 className="mt-6 ml-20 text-3xl text-center p-2">{event.title}</h1>  
 
-            <div className="flex justify-between border-2 p-2 mt-6"> 
-                <div className="flex w-full justify-center p-2 gap-12">
+            <div className="flex md:flex-row flex-col justify-between p-2 mt-6 border-t-2"> 
+                <div className="flex md:flex-row flex-col w-full justify-center p-12 md:p-2 gap-12">
                     <div className="text-xl flex flex-col ">
                             <div className="flex items-center gap-2">
-                                <FaClock ></FaClock>
+                                <FaClock></FaClock>
                                 <h2>{event.time.toLocaleString("en-gb", {hour: '2-digit', minute: "2-digit"})}</h2>
                             </div>
                             <div className="flex items-center gap-2">
-                                <FaCalendar ></FaCalendar>
+                                <FaCalendar/>
                                 <h2>{event.time.getDate("en-gb")}</h2>
                                 <h2>{new Date(event.time).toLocaleString('default', {month: 'short', year: 'numeric'})}</h2>
                             </div>
@@ -76,7 +76,7 @@ export default async function EventPage({params}){
                                 <p>{event.host.username}</p>   
                             </div>
                             <div className="flex items-center gap-2">
-                                <FaLocationDot />
+                                <FaLocationDot/>
                                 <p>{event.location}</p>
                             </div>
                     </div>
@@ -149,7 +149,7 @@ export default async function EventPage({params}){
 
                 </div> 
                 {isHost &&  
-                    <div className="flex flex-col w-1/3 p-4 gap-2 border-l-2">
+                    <div className="flex flex-col md:w-1/3 p-4 gap-2 md:border-l-2">
                         <div className="flex justify-between  pb-2">
                             <p className="text-3xl mb-2">Settings</p>
                             <CancelEventButton/>

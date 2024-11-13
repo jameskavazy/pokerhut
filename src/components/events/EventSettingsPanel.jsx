@@ -190,7 +190,8 @@ export default function EventSettingsPanel({event}){
                 )}
 
                 <br></br>
-                <button className="font-sans md:px-6 md:py-4 text-sm hover:shadow-md text-white bg-gray-800 rounded-full hover:bg-gray-700 transition-colors duration-300" type="submit">Update</button>
+                <button className="font-sans px-6 py-2 md:px-6 md:py-4 text-sm hover:shadow-md text-white
+                 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors duration-300" type="submit">Update</button>
                 {isSuccess && (<p className="text-green-500">Event updated successfully.</p>)}
             </form>
         </div>
