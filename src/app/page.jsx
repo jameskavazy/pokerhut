@@ -9,19 +9,15 @@ import HomeSessionfull from '../components/home/HomeSessionfull';
 export default async function Home({ searchParams }) {
 
   const session = await auth();
-  // console.log("The Session is ", session);
-
+  
   if (session && !session?.user?.username) {
     redirect("/profile/settings")
   }
  
- 
+
   return (
-    <main >
+    <main>
       {session == null ? <HomeSessionless/> : <HomeSessionfull searchParams={searchParams}/>}
     </main>
-    
-  )
-  
-  
+  );
 }

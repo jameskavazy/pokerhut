@@ -4,7 +4,7 @@ export default function DateCard({event}){
     
 
     return (
-        <div className="border-r-2 p-4 flex flex-col h-full justify-center items-center">
+        <div className="md:border-r-2 p-4 flex flex-col h-full justify-center items-center">
             <p className="text-xl font-bold">{`${dateOfMonth}`}</p>
             <p className="text-base">{month}</p>
         </div>

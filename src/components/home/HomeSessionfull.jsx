@@ -1,19 +1,22 @@
 import prisma from "../../lib/db";
 import { auth } from "../../lib/auth";
 import Sidepanel from "./Sidepanel";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 import CreateEventButton from "../events/CreateEventButton";
 import EventCard from "../events/EventCard";
 import CreateEventForm from "../events/CreateEventForm";
-import { eventDateSearchSchema, eventStringSearchSchema } from "../../lib/schemas/event-search/eventSearchSchema";
-export default async function HomeSessionfull({searchParams}){
+import { eventDateSearchSchema } from "../../lib/schemas/event-search/eventSearchSchema";
+export default async function HomeSessionfull({ searchParams }){
 
 
   const session = await auth();
-  const user = session.user;
+  const user = session?.user;
+
+  // if (!session){
+  //   redirect("/api/auth/signin");
+  // } 
+
   let events = await getEventsFromParams(searchParams, user);
-
-
 
 
   return (
@@ -27,11 +30,11 @@ export default async function HomeSessionfull({searchParams}){
         <div className="flex-grow p-12 bg-white " >
               <h1 className="text-center text-3xl">Discover Events</h1> 
 
-              <div className="flex justify-end">
+              <div className="flex md:justify-end w-full">
                 <CreateEventButton >Create Event</CreateEventButton>
               </div>
 
-              <div className="p-8 space-y-4">
+              <div className="p-1 md:p-8 space-y-4">
                 {events.map((event) => {
                   return (
                   <EventCard key={event.id} event={event}></EventCard>
@@ -55,8 +58,8 @@ async function getEventsFromParams(searchParams, user){
  
 
   if (searchParams.location) {
-    locationConditions.mode = 'insensitive'
-    locationConditions.contains = searchParams.location
+    locationConditions.mode = 'insensitive';
+    locationConditions.contains = searchParams.location;
   }
 
   if (searchParams.date === "past") {
@@ -112,13 +115,13 @@ async function getEventsFromParams(searchParams, user){
         OR: [
           {
             host: {
-              username: user.username
+              username: user?.username
             },             
           },
          {
             attendees: {
               some: {
-                username: user.username,
+                username: user?.username,
               }
             }
          }

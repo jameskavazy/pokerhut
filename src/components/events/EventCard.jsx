@@ -13,12 +13,12 @@ import { IoCashOutline } from "react-icons/io5";
 
 export default async function EventCard({event}){
 
-    const user = (await auth()).user;
+    const user = (await auth())?.user;
     const attendees = event.attendees;
-    const isHost = event.hostId === user.id;
+    // const isHost = event.hostId === user.id;
 
     const isAttending = attendees.some((attendee) => {
-        return attendee.id === user.id
+        return attendee.id === user?.id
     });
     
 
@@ -40,12 +40,12 @@ export default async function EventCard({event}){
     }
 
     return (
-        <div className="flex bg-gray-50 rounded-3xl p-6 shadow animate-fade">
-             <div className="flex flex-col w-1/12 justify-center">
+        <div className="flex flex-col md:flex-row bg-gray-50 rounded-3xl p-2 md:p-6 shadow animate-fade">
+             <div className="flex flex-col md:w-1/12 justify-center">
                 <DateCard event={event}></DateCard>
             </div>
 
-            <div className="flex flex-col w-5/12 ml-12">       
+            <div className="flex flex-col md:w-5/12 md:ml-12 m-2 items-center md:items-start">       
                 <p className="font-bold">{event.title}</p>
                 <div className="flex gap-2">
                     <span>
@@ -75,8 +75,8 @@ export default async function EventCard({event}){
                 </span>
             </div>
 
-            <div className="flex w-6/12 justify-between">
-                <div className="flex flex-col">
+            <div className="flex flex-col md:flex-row md:w-6/12 justify-between m-2 items-center md:items-start">
+                <div className="flex flex-col ">
                         <div className="flex items-center gap-2">
                             <FaLocationDot />
                             <p>{event.location}</p>
@@ -93,8 +93,8 @@ export default async function EventCard({event}){
                     })}
                 </div>
             
-                <div className="flex flex-col justify-between justify-items-end gap-2">
-                    <span className="flex justify-center">
+                <div className="flex flex-col justify-between justify-items-end gap-2 m-2 items-center">
+                    <span className="flex md:justify-center ">
 
                     {isAttending ? (
                             <form
@@ -137,7 +137,7 @@ export default async function EventCard({event}){
 
 async function handleJoin(event){
     const eventId = event.id;
-    const user = (await auth()).user;
+    const user = (await auth())?.user;
 
     try {
         await prisma.event.update({

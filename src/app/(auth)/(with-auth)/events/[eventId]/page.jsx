@@ -14,7 +14,12 @@ export default async function EventPage({params}){
    
     const {eventId} = params;
     const session = await auth();
-    const user = session.user;
+    const user = session?.user;
+
+    if (!session){
+        redirect("/")
+    }
+
     let isHost = false;
 
     const BLINDS = {

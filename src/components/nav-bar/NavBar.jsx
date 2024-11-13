@@ -21,7 +21,7 @@ export default async function NavBar() {
 
 
     return (
-        <header className="sticky top-0 z-10 flex justify-around md:justify-center bg-gray-50 p-4 md:py-6 shadow-md w-full">
+        <header className="sticky top-0 z-40 flex justify-around md:justify-center bg-gray-50 p-4 md:py-6 shadow-md w-full">
             <div className="p-2">
                 <Link href="/">
                     <p className='font-bold lg:text-3xl'>pokerhut.co.uk</p>
