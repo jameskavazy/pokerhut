@@ -1,9 +1,14 @@
+# PokerHut
 
-# Poker Payout Calculator
-
-Poker Payout Calculator is a web application that helps poker players calculate their profit/loss and determine payout requirements after a cash game. This application is built with Next.js+React framework and AWS services and is designed to provide a simple tool for managing poker game finances.
+PokerHut is a community-driven web application designed for poker players to connect, organise games, and manage their poker communities. Built with the Next.js+React framework it provides tools for managing poker home games - with the payout calculator for cash games and the ability to advertise events to your local poker community.
 
 ## Features
+
+### Home Game Events
+- **Create Events:** Advertise your private poker games, adding event details such as title, location, time, and game type to attract players to your home game.
+- **Join Events:** Browse and join existing events created by other players.
+- **Event Filtering:** Use intuitive filters to find events by date, location, or host.
+- **User Profiles and Attendee Lists:** View who’s attending an event and access attendee profiles. Follow your favourite poker players.
 
 ### Cashout Calculator
 - **Add Players:** Easily add players with unique IDs to the game list.
@@ -11,8 +16,14 @@ Poker Payout Calculator is a web application that helps poker players calculate 
 - **Profit/Loss Calculation:** Automatically calculate the profit or loss for each player based on the difference between their buy-in and cash-out amounts.
 - **Payout Requirements:** View a summary of payouts required to balance the game’s funds among players.
 
-### State Persistence
-- **Local Storage:** Player details are saved in local storage, allowing you to preserve data across sessions and refreshes.
+### Authentication and User Management
+- **Google Authentication:** Secure login using Google accounts.
+- **Personalized Profiles:** Users can update their profiles, including profile images and usernames.
+- **Follow System:** Follow other players to stay connected and keep track of their events.
+
+### **State Persistence**
+- **Local Storage:** Player and event details persist across sessions using local storage.
+- **Dynamic Query Parameters:** Event filters and user preferences are maintained via URL query parameters.
 
 ### Validation and Warnings
 - **Form Validation:** The application validates player inputs to ensure all required fields are filled correctly before calculations.
@@ -20,9 +31,13 @@ Poker Payout Calculator is a web application that helps poker players calculate 
 
 ## Technology Stack
 
-- **Frontend:** Next.js (React)
-- **Backend:** Next.js (Node.js)
-- **Deployment:** To Be Deployed with Docker on AWS using EC2 Virtual Machine.
+- **Frontend:** Next.js, React, Tailwind CSS
+- **Backend:** Next.js API routes (Node.js)
+- **Database:** Prisma with a Postgres database
+- **Authentication:** Auth.js with Google provider
+- **Validation:** Zod for input validation and schema enforcement
+- **Deployment:** Dockerized on AWS EC2
+
 
 ## Getting Started
 
@@ -50,11 +65,6 @@ Poker Payout Calculator is a web application that helps poker players calculate 
 
 4. Open your browser and navigate to `http://localhost:3000` to use the app.
 
-## Future Features
-
-- **Authentication and User Profiles:** User management and personalized profiles.
-- **Private Games Event Posts:** Join and host private games by adding your own private game to the event list or browse events near you to join.
-- **Additional Calculators:** Expanding to support to tournament payouts, specifically determining best structure for blinds and payouts. 
 
 ## Contact
 
