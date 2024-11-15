@@ -49,7 +49,7 @@ PokerHut is a community-driven web application designed for poker players to con
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/poker-payout-calculator.git
+    git clone https://github.com/jameskavazy/poker-payout-calculator.git
     cd poker-payout-calculator
     ```
 
