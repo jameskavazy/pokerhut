@@ -54,8 +54,7 @@ export default function Sidepanel({ user }){
 
     return (
         <>
-        
-        
+
         
         <div className="md:hidden flex flex-col z-20 p-2 sticky top-24">
                 <button onClick={handleSidebarToggle}>|||</button>

@@ -113,7 +113,7 @@ export default async function EventPage({params}){
                                                         }
                                                     });
                                                 }                                    
-                                                revalidatePath(`/events/${eventId}`)
+                                                revalidatePath(`/events/${eventId}`);
                                             }}>
                                                                                             
                                             {(attendee.id === user.id && 

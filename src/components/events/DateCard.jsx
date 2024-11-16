@@ -4,9 +4,9 @@ export default function DateCard({event}){
     
 
     return (
-        <div className="md:border-r-2 p-4 flex flex-col h-full justify-center items-center">
-            <p className="text-xl font-bold">{`${dateOfMonth}`}</p>
-            <p className="text-base">{month}</p>
+        <div className="md:border-r-2 p-4 flex flex-col h-full justify-center  ">
+            <p className="text-xl font-bold text-center">{`${dateOfMonth}`}</p>
+            <p className="text-center">{month}</p>
         </div>
     );
 }
