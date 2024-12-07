@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: .
+      target: prod
+    image: pokerapp
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:example@poker-payout-calculator-db-1:5432/pokerhut-dev-db
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432
+    volumes:
+      - /home/ec2-user/volumes/postgres/:/var/lib/postgresql/data/
