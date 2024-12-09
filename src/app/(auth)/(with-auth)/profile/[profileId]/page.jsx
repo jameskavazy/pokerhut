@@ -3,11 +3,17 @@ import EventCard from "../../../../../components/events/EventCard";
 import prisma from "../../../../../lib/db";
 import { auth } from "../../../../../lib/auth";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export default async function ProfilePage({params}){
-    
+
     const username = params.profileId;
     const session = await auth();
+
+    if (username === 'null'){
+        redirect('/profile/settings');
+        return
+    }
 
     const sessionUser = await prisma.user.findUnique({
         include:{

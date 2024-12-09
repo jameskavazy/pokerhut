@@ -11,5 +11,8 @@ export const usernameSchema = z.object({
                         const isUsernameTaken = await isUsernameAvailable(username);  
                         return isUsernameTaken.length == 0;
                     }, "Username is already taken." )
+                    .refine((username) => username !== "null", {
+                        message: "Invalid username",
+                    })
 });
 

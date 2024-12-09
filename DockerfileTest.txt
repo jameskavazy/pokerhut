@@ -1,5 +1,4 @@
-FROM node:20-alpine
-FROM node:20-alpine
+FROM node:20-alpine AS base
 
 WORKDIR  /poker-payout-calculator
 
@@ -11,12 +10,17 @@ RUN npx prisma generate --schema=./primsa/schema.prisma
 RUN npm install
 
 
+# Dev
+FROM base AS dev
 COPY . .
-
+ENV NODE_ENV=development
 ENV PORT=3000
-
 EXPOSE 3000
-
-
 CMD [ "npm", "run", "dev" ]
 
+FROM base AS prod
+COPY . .
+RUN npm run build
+ENV PORT=3000
+EXPOSE 3000
+CMD ["npm", "start"]
