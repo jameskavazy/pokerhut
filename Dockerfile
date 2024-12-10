@@ -1,7 +1,8 @@
 FROM node:20-alpine
-FROM node:20-alpine
 
 WORKDIR  /poker-payout-calculator
+
+RUN apk add --no-cache openssl
 
 COPY package*.json ./
 # COPY .env ./.env
